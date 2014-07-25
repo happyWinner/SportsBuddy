@@ -23,5 +23,7 @@
     <string name="error_password_not_match">The passwords do not match</string>
     <string name="error_username_taken">The username is already taken</string>
     <string name="error_email_taken">The email is already taken</string>
+    <string name="error_incorrect_email_password">Incorrect email or password</string>
+    <string name="error_unverified_email">Please verify your email first</string>
 
 </resources>

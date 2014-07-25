@@ -289,10 +289,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Void> {
 
         private final String mEmail;
         private final String mPassword;
+        private boolean success;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -300,70 +301,82 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Void doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereEqualTo("email", mEmail);
             query.getFirstInBackground(new GetCallback<ParseUser>() {
                 public void done(ParseUser user, ParseException e) {
                     if (user == null) {
-                        //TODO
-                        Toast.makeText(getApplicationContext(), "User not exist!", Toast.LENGTH_SHORT).show();
-                        return;
+                        // incorrect email address
+                        exceptionHandler(e, getString(R.string.error_incorrect_email_password));
                     } else {
-                        //TODO
                         ParseUser.logInInBackground(user.getUsername(), mPassword, new LogInCallback() {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
-                                    // Hooray! The user is logged in.
-                                    //todo
-                                    Toast.makeText(getApplicationContext(), "User log in!", Toast.LENGTH_SHORT).show();
+                                    // check whether the user has verified his email address
+                                    ParseQuery<ParseUser> query = ParseUser.getQuery();
+                                    query.whereEqualTo("email", mEmail);
+                                    query.whereEqualTo("emailVerified", true);
+                                    query.getFirstInBackground(new GetCallback<ParseUser>() {
+                                        public void done(ParseUser user, ParseException e) {
+                                            if (user != null) {
+                                                // Hooray! The user is logged in.
+                                                //todo : start a new activity
+                                                Toast.makeText(getApplicationContext(), "User log in!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                exceptionHandler(e, getString(R.string.error_unverified_email));
+                                            }
+                                        }
+                                    });
                                 } else {
                                     // Signup failed. Look at the ParseException to see what happened.
-                                    //TODO
-
+                                    exceptionHandler(e, getString(R.string.error_incorrect_email_password));
                                 }
                             }
                         });
                     }
                 }
             });
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
 
-
-            return true;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                //TODO: start new activity
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
 
         @Override
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+
+        private void exceptionHandler(ParseException e, String objNotFoundMessage) {
+            switch (e.getCode()) {
+                case ParseException.INTERNAL_SERVER_ERROR:
+                    Toast.makeText(getApplicationContext(), "Server is down! Retry later!", Toast.LENGTH_LONG).show();
+                    break;
+
+                case ParseException.CONNECTION_FAILED:
+                    Toast.makeText(getApplicationContext(), "Connection error! Retry later!", Toast.LENGTH_LONG).show();
+                    break;
+
+                case ParseException.TIMEOUT:
+                    Toast.makeText(getApplicationContext(), "Timeout! Retry later!", Toast.LENGTH_LONG).show();
+                    break;
+
+                case ParseException.OBJECT_NOT_FOUND:
+                    Toast.makeText(getApplicationContext(), objNotFoundMessage, Toast.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 }
