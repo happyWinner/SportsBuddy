@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SportsBuddy</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    
+    <!-- Strings related to Parse -->
+    <string name="application_id">KEYrTbDTamEX2fxfQ7B3Rqwe5EVBsltL4v7nib6h</string>
+    <string name="client_key">1bQn5Nais4OvtQclrqPu0pRh0wgeGjx2evCEqzIq</string>
+
+    <!-- Strings related to login and register -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_email">Email Address</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="or">or</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_password_not_match">The passwords do not match</string>
+    <string name="error_username_taken">The username is already taken</string>
+    <string name="error_email_taken">The email is already taken</string>
+
+</resources>
