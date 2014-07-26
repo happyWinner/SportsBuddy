@@ -3,7 +3,7 @@
 
     <string name="app_name">SportsBuddy</string>
     <string name="title_activity_register">RegisterActivity</string>
-    
+
     <!-- Strings related to Parse -->
     <string name="application_id">KEYrTbDTamEX2fxfQ7B3Rqwe5EVBsltL4v7nib6h</string>
     <string name="client_key">1bQn5Nais4OvtQclrqPu0pRh0wgeGjx2evCEqzIq</string>
@@ -25,5 +25,11 @@
     <string name="error_email_taken">The email is already taken</string>
     <string name="error_incorrect_email_password">Incorrect email or password</string>
     <string name="error_unverified_email">Please verify your email first</string>
+
+    <!-- Strings related to profile activity -->
+    <string name="title_event">Event</string>
+    <string name="title_team">Team</string>
+    <string name="title_discussion">Discussion</string>
+    <string name="title_profile">Profile</string>
 
 </resources>

@@ -47,14 +47,6 @@ import java.util.List;
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -70,11 +62,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // hide the soft keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
         // authenticates this client to Parse
         Parse.initialize(this, getString(R.string.application_id), getString(R.string.client_key));
+
+        // hide the soft keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         // register a touch listener to the layout
         ((LinearLayout) findViewById(R.id.layout_login)).setOnTouchListener(new TouchListener());
@@ -302,7 +294,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         @Override
         protected Void doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereEqualTo("email", mEmail);
             query.getFirstInBackground(new GetCallback<ParseUser>() {
@@ -323,7 +314,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                                             if (user != null) {
                                                 // Hooray! The user is logged in.
                                                 //todo : start a new activity
-                                                Toast.makeText(getApplicationContext(), "User log in!", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                             } else {
                                                 exceptionHandler(e, getString(R.string.error_unverified_email));
                                             }

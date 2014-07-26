@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/team_new"
+        android:icon="@drawable/ic_action_team_new"
+        android:title=""
+        android:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/team_search"
+        android:icon="@drawable/ic_action_team_search"
+        android:title=""
+        android:showAsAction="always"
+        />
+
+</menu>
