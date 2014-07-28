@@ -188,6 +188,7 @@ public class NewEventActivity extends Activity {
             event.setLongitude(latLng.longitude);
             event.setAddressText(addressText);
             event.setMaxPeople(Integer.parseInt(maxPeople));
+            event.setCurrentPeople(1);
             event.setVisibility(visibility);
             event.setNotes(notes);
             event.saveInBackground(new SaveEventCallback());

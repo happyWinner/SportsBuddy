@@ -18,6 +18,7 @@ public class Event extends ParseObject {
     private double longitude;
     private String addressText;
     private int maxPeople;
+    private int currentPeople;
     private String visibility;
     private String notes;
 
@@ -83,6 +84,14 @@ public class Event extends ParseObject {
 
     public int getMaxPeople() {
         return getInt("maxPeople");
+    }
+
+    public void setCurrentPeople(int currentPeople) {
+        put("currentPeople", currentPeople);
+    }
+
+    public int getCurrentPeople() {
+        return getInt("currentPeople");
     }
 
     public void setVisibility(String visibility) {

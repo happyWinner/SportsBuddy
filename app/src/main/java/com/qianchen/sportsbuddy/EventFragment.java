@@ -19,6 +19,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.VisibleRegion;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 /**
@@ -45,24 +54,13 @@ public class EventFragment extends Fragment {
     private GoogleMap map;
     private LocationManager locationManager;
     private OnFragmentInteractionListener mListener;
+    private CameraPosition lastPosition;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EventFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EventFragment newInstance(String param1, String param2) {
         EventFragment fragment = new EventFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
+
     public EventFragment() {
         // Required empty public constructor
     }
@@ -70,10 +68,12 @@ public class EventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        // register Event as the subclass of ParseObject
+        ParseObject.registerSubclass(Event.class);
+
+        // authenticates this client to Parse
+        Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     }
@@ -97,6 +97,14 @@ public class EventFragment extends Fragment {
         // set Google Map parameters
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
+        map.setOnCameraChangeListener(new CameraListener());
+
+        // restore previous data
+        if (savedInstanceState != null) {
+            lastPosition = savedInstanceState.getParcelable("lastPosition");
+        } else {
+            lastPosition = null;
+        }
 
         return view;
     }
@@ -104,15 +112,26 @@ public class EventFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
-        if (location == null) {
-            Toast.makeText(getActivity(), "Fail to get location!", Toast.LENGTH_SHORT).show();
+        if (lastPosition == null) {
+            Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
+            if (location == null) {
+                Toast.makeText(getActivity(), getString(R.string.error_fail_to_get_location), Toast.LENGTH_SHORT).show();
+            } else {
+                // set the centre of the map to the user's position
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(16).build();
+                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
         } else {
-            // set the centre of the map to the user's position
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(16).build();
-            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            // move camera to the last position
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(lastPosition));
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("lastPosition", lastPosition);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,6 +156,38 @@ public class EventFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    class CameraListener implements GoogleMap.OnCameraChangeListener {
+        @Override
+        public void onCameraChange(CameraPosition cameraPosition) {
+            // save position every time camera changes
+            lastPosition = cameraPosition;
+
+            // query all events in the visible region
+            VisibleRegion visibleRegion = map.getProjection().getVisibleRegion();
+            double left = visibleRegion.latLngBounds.southwest.longitude;
+            double top = visibleRegion.latLngBounds.northeast.latitude;
+            double right = visibleRegion.latLngBounds.northeast.longitude;
+            double bottom = visibleRegion.latLngBounds.southwest.latitude;
+
+            // show the events on Google Map
+            ParseQuery<Event> query = ParseQuery.getQuery(Event.class.getSimpleName());
+            query.whereLessThan("latitude", top);
+            query.whereGreaterThan("latitude", bottom);
+            query.whereLessThan("longitude", right);
+            query.whereGreaterThan("longitude", left);
+            query.findInBackground(new FindCallback<Event>() {
+                @Override
+                public void done(List<Event> events, ParseException e) {
+                    if (e == null) {
+                        for (Event event : events) {
+                            map.addMarker(new MarkerOptions().position(new LatLng(event.getLatitude(), event.getLongitude()))).showInfoWindow();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**
