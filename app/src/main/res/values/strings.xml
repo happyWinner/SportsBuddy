@@ -26,10 +26,46 @@
     <string name="error_incorrect_email_password">Incorrect email or password</string>
     <string name="error_unverified_email">Please verify your email first</string>
 
-    <!-- Strings related to profile activity -->
+    <!-- Strings related to tab activity -->
     <string name="title_event">Event</string>
     <string name="title_team">Team</string>
     <string name="title_discussion">Discussion</string>
     <string name="title_profile">Profile</string>
+
+    <!-- Strings related to new event activity -->
+    <string name="label_sport_type">Sport Type</string>
+    <string name="prompt_sport_type">[Please Select A Sport]</string>
+
+    <string-array name="sport_type_array">
+        <item>Basketball</item>
+        <item>Pool</item>
+        <item>Racquetball</item>
+        <item>Soccer</item>
+        <item>Squash</item>
+        <item>Tennis</item>
+    </string-array>
+
+    <string name="label_date">Date</string>
+    <string name="label_time">Time</string>
+    <string name="label_location">Location</string>
+    <string name="button_location">Choose Location in Map</string>
+    <string name="label_max_people">Max People</string>
+    <string name="label_visibility">Visibility</string>
+    <string name="prompt_visibility">[Please Select Visibility]</string>
+    <string name="label_notes">Notes</string>
+    <string name="hint_notes">Input notes here or leave it empty...</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="error_empty_sport_type">Please select a sport!</string>
+    <string name="error_empty_location">Please select location!</string>
+    <string name="error_empty_max_people">Please input max people!</string>
+    <string name="error_empty_visibility">Please select visibility!</string>
+    <string name="event_created_successfully">Your event is created successfully!</string>
+
+    <!-- Strings related to new event map activity -->
+    <string name="hint_location">input location...</string>
+    <string name="error_fail_to_get_location">Fail to get location!</string>
+    <string name="error_no_location_found">No location found!</string>
+    <string name="error_no_location_selected">Please choose location first!</string>
 
 </resources>

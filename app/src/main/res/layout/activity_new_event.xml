@@ -1,0 +1,211 @@
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:id="@+id/relative_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linear_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/label_sport_type_height"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_sport_type"
+            android:id="@+id/label_sport_type"
+            android:layout_alignRight="@+id/label_max_people"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/padding_horizontal" />
+
+        <com.qianchen.sportsbuddy.NoDefaultSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_sport_type"
+            android:prompt="@string/prompt_sport_type"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/label_sport_type"
+            android:layout_alignBottom="@+id/label_sport_type"
+            android:layout_toRightOf="@+id/label_sport_type"
+            android:layout_toEndOf="@+id/label_sport_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_date"
+            android:id="@+id/label_date"
+            android:layout_below="@+id/label_sport_type"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/label_sport_type"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal" />
+
+        <CalendarView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/calendar_view_height"
+            android:id="@+id/calendar_view"
+            android:layout_alignTop="@+id/label_date"
+            android:layout_toRightOf="@+id/label_date"
+            android:showWeekNumber="false"
+            android:shownWeekCount="4"
+            android:paddingTop="@dimen/padding_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_time"
+            android:id="@+id/label_time"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/label_sport_type"
+            android:layout_alignTop="@+id/time_picker"
+            android:layout_alignBottom="@+id/time_picker"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal"  />
+
+        <TimePicker
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/time_picker_height"
+            android:id="@+id/time_picker"
+            android:layout_below="@+id/calendar_view"
+            android:layout_toRightOf="@+id/label_time"
+            android:layout_alignLeft="@+id/spinner_sport_type"
+            android:paddingTop="@dimen/padding_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_location"
+            android:id="@+id/label_location"
+            android:layout_alignTop="@+id/button_location"
+            android:layout_alignBottom="@+id/button_location"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/label_sport_type"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal"  />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_location"
+            android:id="@+id/button_location"
+            android:layout_below="@+id/label_time"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@+id/spinner_sport_type"
+            android:paddingTop="@dimen/padding_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_max_people"
+            android:id="@+id/label_max_people"
+            android:layout_below="@+id/label_location"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/edit_max_people"
+            android:layout_below="@+id/button_location"
+            android:layout_alignLeft="@+id/button_location"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/padding_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/label_visibility_height"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_visibility"
+            android:id="@+id/label_visibility"
+            android:layout_below="@+id/edit_max_people"
+            android:layout_alignRight="@+id/label_sport_type"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal" />
+
+        <com.qianchen.sportsbuddy.NoDefaultSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_visibility"
+            android:prompt="@string/prompt_visibility"
+            android:layout_alignTop="@+id/label_visibility"
+            android:layout_alignBottom="@+id/label_visibility"
+            android:layout_toRightOf="@+id/label_visibility"
+            android:layout_toEndOf="@+id/label_visibility"
+            android:paddingTop="@dimen/padding_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/label_notes"
+            android:id="@+id/label_notes"
+            android:layout_below="@+id/label_visibility"
+            android:layout_alignRight="@+id/label_sport_type"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_horizontal" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_notes"
+            android:id="@+id/edit_notes"
+            android:layout_below="@+id/spinner_visibility"
+            android:layout_alignLeft="@+id/spinner_visibility"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="@dimen/padding_vertical" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_confirm"
+            android:id="@+id/button_confirm"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel"
+            android:id="@+id/button_cancel"
+            android:layout_weight="1" />
+    </LinearLayout>
+</RelativeLayout>

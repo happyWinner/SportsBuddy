@@ -133,7 +133,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.team_new:
+            case R.id.event_new:
+                startActivity(new Intent(this, NewEventActivity.class));
                 break;
         }
 
@@ -171,9 +172,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-//            if (position == 0) {
-//                return EventFragment.newInstance("a", "b");
-//            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
