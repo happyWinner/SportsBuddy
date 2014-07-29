@@ -53,6 +53,7 @@ import java.util.List;
  *
  */
 public class EventFragment extends Fragment {
+
     public static final int MILLISECONDS_PER_HOUR = 3600000;
     public static final int MILLISECONDS_PER_MINUTE = 60000;
 
@@ -310,5 +311,4 @@ public class EventFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 }
