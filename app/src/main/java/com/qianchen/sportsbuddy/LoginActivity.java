@@ -349,15 +349,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         private void exceptionHandler(ParseException e, String objNotFoundMessage) {
             switch (e.getCode()) {
                 case ParseException.INTERNAL_SERVER_ERROR:
-                    Toast.makeText(getApplicationContext(), "Server is down! Retry later!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
                     break;
 
                 case ParseException.CONNECTION_FAILED:
-                    Toast.makeText(getApplicationContext(), "Connection error! Retry later!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
                     break;
 
                 case ParseException.TIMEOUT:
-                    Toast.makeText(getApplicationContext(), "Timeout! Retry later!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
                     break;
 
                 case ParseException.OBJECT_NOT_FOUND:
@@ -365,7 +365,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     break;
 
                 default:
-                    Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
                     break;
             }
         }

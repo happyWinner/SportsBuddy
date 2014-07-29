@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.Date;
@@ -191,6 +192,7 @@ public class NewEventActivity extends Activity {
             event.setCurrentPeople(1);
             event.setVisibility(visibility);
             event.setNotes(notes);
+            event.addParticipant(ParseUser.getCurrentUser());
             event.saveInBackground(new SaveEventCallback());
         }
     }
@@ -198,7 +200,27 @@ public class NewEventActivity extends Activity {
     private class SaveEventCallback extends SaveCallback {
         @Override
         public void done(ParseException e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.event_created_successfully), Toast.LENGTH_SHORT).show();
+            if (e == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.event_created_successfully), Toast.LENGTH_SHORT).show();
+            } else {
+                switch (e.getCode()) {
+                    case ParseException.INTERNAL_SERVER_ERROR:
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                        break;
+
+                    case ParseException.CONNECTION_FAILED:
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                        break;
+
+                    case ParseException.TIMEOUT:
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                        break;
+
+                    default:
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
             finish();
         }
     }

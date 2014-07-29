@@ -127,15 +127,15 @@ public class RegisterActivity extends Activity {
                     // to figure out what went wrong
                     switch (e.getCode()) {
                         case ParseException.INTERNAL_SERVER_ERROR:
-                            Toast.makeText(getApplicationContext(), "Server is down! Retry later!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
                             break;
 
                         case ParseException.CONNECTION_FAILED:
-                            Toast.makeText(getApplicationContext(), "Connection error! Retry later!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
                             break;
 
                         case ParseException.TIMEOUT:
-                            Toast.makeText(getApplicationContext(), "Timeout! Retry later!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
                             break;
 
                         case ParseException.USERNAME_TAKEN:
@@ -149,7 +149,7 @@ public class RegisterActivity extends Activity {
                             break;
 
                         default:
-                            Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_fail_to_get_location), Toast.LENGTH_LONG).show();
                             break;
                     }
                 }

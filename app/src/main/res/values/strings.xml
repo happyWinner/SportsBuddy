@@ -7,6 +7,10 @@
     <!-- Strings related to Parse -->
     <string name="application_id">KEYrTbDTamEX2fxfQ7B3Rqwe5EVBsltL4v7nib6h</string>
     <string name="client_key">1bQn5Nais4OvtQclrqPu0pRh0wgeGjx2evCEqzIq</string>
+    <string name="error_internal_server">Server is down! Retry later!</string>
+    <string name="error_connection_failed">Connection error! Retry later!</string>
+    <string name="error_timeout">Timeout! Retry later!</string>
+    <string name="error_general">Error!</string>
 
     <!-- Strings related to login and register -->
     <string name="prompt_username">Username</string>
@@ -67,5 +71,10 @@
     <string name="error_fail_to_get_location">Fail to get location!</string>
     <string name="error_no_location_found">No location found!</string>
     <string name="error_no_location_selected">Please choose location first!</string>
+
+    <!--Strings related to event popup window -->
+    <string name="label_current_people">Current People</string>
+    <string name="button_join">Join</string>
+    <string name="event_join_successfully">You have successfully joined the event!</string>
 
 </resources>

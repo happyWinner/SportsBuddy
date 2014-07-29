@@ -1,0 +1,194 @@
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/relative_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/linear_layout">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/label_sport_type_height"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_sport_type"
+                android:id="@+id/label_sport_type"
+                android:layout_alignRight="@+id/label_current_people"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_sport_type"
+                android:layout_alignBottom="@+id/label_sport_type"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/value_sport_type"
+                android:layout_toRightOf="@+id/label_sport_type"
+                android:layout_alignParentEnd="true"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_time"
+                android:id="@+id/label_time"
+                android:layout_below="@+id/label_sport_type"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/label_current_people"
+                android:paddingTop="@dimen/padding_vertical"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_time"
+                android:layout_alignBottom="@+id/label_time"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/value_time"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/label_time"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_location"
+                android:id="@+id/label_location"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/label_current_people"
+                android:layout_below="@+id/label_time"
+                android:paddingTop="@dimen/padding_vertical"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_location"
+                android:layout_alignBottom="@+id/label_location"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/value_location"
+                android:layout_toRightOf="@+id/label_location"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_max_people"
+                android:id="@+id/label_max_people"
+                android:layout_below="@+id/label_location"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/label_current_people"
+                android:paddingTop="@dimen/padding_vertical"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_max_people"
+                android:layout_alignBottom="@+id/label_max_people"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/value_max_people"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/label_max_people"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_current_people"
+                android:id="@+id/label_current_people"
+                android:layout_below="@+id/label_max_people"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/label_current_people"
+                android:paddingTop="@dimen/padding_vertical"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_current_people"
+                android:layout_alignBottom="@+id/label_current_people"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_toRightOf="@+id/label_current_people"
+                android:id="@+id/value_current_people"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/label_notes"
+                android:id="@+id/label_notes"
+                android:layout_below="@+id/label_current_people"
+                android:layout_alignRight="@+id/label_current_people"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:paddingTop="@dimen/padding_vertical"
+                android:paddingRight="@dimen/padding_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/label_notes"
+                android:layout_alignBottom="@+id/label_notes"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/value_notes"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/label_notes"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_vertical" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="@dimen/padding_vertical" >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/button_join"
+            android:gravity="center_horizontal"
+            android:id="@+id/button_join" />
+    </LinearLayout>
+</RelativeLayout>
+
+

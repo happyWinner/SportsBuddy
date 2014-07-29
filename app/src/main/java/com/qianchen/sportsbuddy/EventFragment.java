@@ -3,15 +3,21 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.parse.FindCallback;
@@ -26,7 +33,13 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -45,6 +58,9 @@ public class EventFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public static final int MILLISECONDS_PER_HOUR = 3600000;
+    public static final int MILLISECONDS_PER_MINUTE = 60000;
+
     private static View view;
 
     // TODO: Rename and change types of parameters
@@ -55,6 +71,9 @@ public class EventFragment extends Fragment {
     private LocationManager locationManager;
     private OnFragmentInteractionListener mListener;
     private CameraPosition lastPosition;
+    private HashMap<Marker, Event> markerEventHashMap;
+    private HashSet<String> eventIDHashSet;
+    private SimpleDateFormat simpleDateFormat;
 
     public static EventFragment newInstance(String param1, String param2) {
         EventFragment fragment = new EventFragment();
@@ -98,6 +117,7 @@ public class EventFragment extends Fragment {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
         map.setOnCameraChangeListener(new CameraListener());
+        map.setOnInfoWindowClickListener(new InfoWindowListener());
 
         // restore previous data
         if (savedInstanceState != null) {
@@ -112,6 +132,10 @@ public class EventFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        markerEventHashMap = new HashMap<Marker, Event>();
+        eventIDHashSet = new HashSet<String>();
+        simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd EEE HH:mm");
+
         if (lastPosition == null) {
             Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
             if (location == null) {
@@ -159,6 +183,7 @@ public class EventFragment extends Fragment {
     }
 
     class CameraListener implements GoogleMap.OnCameraChangeListener {
+
         @Override
         public void onCameraChange(CameraPosition cameraPosition) {
             // save position every time camera changes
@@ -182,7 +207,94 @@ public class EventFragment extends Fragment {
                 public void done(List<Event> events, ParseException e) {
                     if (e == null) {
                         for (Event event : events) {
-                            map.addMarker(new MarkerOptions().position(new LatLng(event.getLatitude(), event.getLongitude()))).showInfoWindow();
+                            if (!eventIDHashSet.contains(event.getObjectId()) && event.getMaxPeople() > event.getCurrentPeople()) {
+                                eventIDHashSet.add(event.getObjectId());
+                                MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(event.getLatitude(), event.getLongitude()));
+                                long dateMilliseconds = event.getDateMilliseconds() + event.getHour() * MILLISECONDS_PER_HOUR + event.getMinute() * MILLISECONDS_PER_MINUTE;
+                                markerOptions.title(event.getSportType()).snippet(simpleDateFormat.format(new Date(dateMilliseconds)));
+                                markerEventHashMap.put(map.addMarker(markerOptions), event);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    class InfoWindowListener implements GoogleMap.OnInfoWindowClickListener {
+
+        public static final int POPUP_WINDOW_HEIGHT = 800;
+
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            Event event = markerEventHashMap.get(marker);
+            View popupView = ((LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.popup_event, null, false);
+            PopupWindow popupWindow = new PopupWindow(popupView);
+            ((TextView) popupView.findViewById(R.id.value_sport_type)).setText(event.getSportType());
+            long dateMilliseconds = event.getDateMilliseconds() + event.getHour() * MILLISECONDS_PER_HOUR + event.getMinute() * MILLISECONDS_PER_MINUTE;
+            ((TextView) popupView.findViewById(R.id.value_time)).setText(simpleDateFormat.format(new Date(dateMilliseconds)));
+            ((TextView) popupView.findViewById(R.id.value_location)).setText(event.getAddressText());
+            ((TextView) popupView.findViewById(R.id.value_max_people)).setText(String.valueOf(event.getMaxPeople()));
+            ((TextView) popupView.findViewById(R.id.value_current_people)).setText(String.valueOf(event.getCurrentPeople()));
+            ((TextView) popupView.findViewById(R.id.value_notes)).setText(event.getNotes());
+            ((Button) popupView.findViewById(R.id.button_join)).setOnClickListener(new JoinListener(marker, event, popupWindow));
+
+            popupWindow.setFocusable(true);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(R.color.black));
+            popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow.setHeight(POPUP_WINDOW_HEIGHT);
+            popupWindow.showAtLocation(getActivity().findViewById(R.id.frame_layout), Gravity.BOTTOM, 0, 0);
+        }
+    }
+
+    class JoinListener implements View.OnClickListener {
+        Marker marker;
+        Event event;
+        PopupWindow popupWindow;
+
+        JoinListener(Marker marker, Event event, PopupWindow popupWindow) {
+            this.marker = marker;
+            this.event = event;
+            this.popupWindow = popupWindow;
+        }
+
+        @Override
+        public void onClick(View v) {
+            event.increment("currentPeople");
+            event.addParticipant(ParseUser.getCurrentUser());
+            event.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Toast.makeText(getActivity(), getString(R.string.event_join_successfully), Toast.LENGTH_LONG).show();
+
+                        // clear the mark on the map if event has enough participants
+                        if (event.getCurrentPeople() == event.getMaxPeople()) {
+                            eventIDHashSet.remove(event.getObjectId());
+                            markerEventHashMap.remove(marker);
+                            marker.remove();
+                        }
+
+                        // dismiss the popup window
+                        popupWindow.dismiss();
+                    } else {
+                        switch (e.getCode()) {
+                            case ParseException.INTERNAL_SERVER_ERROR:
+                                Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                                break;
+
+                            case ParseException.CONNECTION_FAILED:
+                                Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                                break;
+
+                            case ParseException.TIMEOUT:
+                                Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                                break;
+
+                            default:
+                                Toast.makeText(getActivity(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                                break;
                         }
                     }
                 }

@@ -2,6 +2,10 @@ package com.qianchen.sportsbuddy;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An event object.
@@ -10,17 +14,6 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Event")
 public class Event extends ParseObject {
-    private String sportType;
-    private long dateMilliseconds;
-    private int hour;
-    private int minute;
-    private double latitude;
-    private double longitude;
-    private String addressText;
-    private int maxPeople;
-    private int currentPeople;
-    private String visibility;
-    private String notes;
 
     public void setSportType(String sportType) {
         put("sportType", sportType);
@@ -108,5 +101,18 @@ public class Event extends ParseObject {
 
     public String getNotes() {
         return getString("notes");
+    }
+
+    public void addParticipant(ParseUser participant) {
+        List<Object> participants = getList("participants");
+        if (participants == null) {
+            participants = new ArrayList<Object>();
+            participants.add(participant);
+        }
+        put("participants", participants);
+    }
+
+    public List<ParseUser> getParticipants() {
+        return getList("participants");
     }
 }
