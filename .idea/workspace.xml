@@ -32,7 +32,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.qianchen.sportsbuddy" />
   </component>
   <component name="ChangeListManager">
@@ -61,36 +61,32 @@
       <file leaf-file-name="EventFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6993865" vertical-offset="0" max-vertical-offset="5434">
-              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.86588234" vertical-offset="1627" max-vertical-offset="5320">
+              <caret line="145" column="69" selection-start-line="145" selection-start-column="69" selection-end-line="145" selection-end-column="69" />
               <folding>
-                <element signature="e#3140#3174#0" expanded="true" />
-                <element signature="e#3176#3206#0" expanded="true" />
-                <element signature="e#4943#4989#0" expanded="true" />
-                <element signature="e#7514#8594#0" expanded="true" />
-                <element signature="e#8579#8580#0" expanded="true" />
-                <element signature="e#11046#12842#0" expanded="true" />
-                <element signature="e#11237#11280#0" expanded="true" />
-                <element signature="e#11991#12032#0" expanded="true" />
-                <element signature="e#12230#12273#0" expanded="true" />
-                <element signature="e#12461#12494#0" expanded="true" />
-                <element signature="e#12662#12695#0" expanded="true" />
-                <element signature="e#12827#12828#0" expanded="true" />
+                <element signature="e#2788#2822#0" expanded="true" />
+                <element signature="e#2824#2854#0" expanded="true" />
+                <element signature="e#4612#4658#0" expanded="true" />
+                <element signature="e#7254#8334#0" expanded="true" />
+                <element signature="e#8319#8320#0" expanded="true" />
+                <element signature="e#10786#12582#0" expanded="true" />
+                <element signature="e#10977#11020#0" expanded="true" />
+                <element signature="e#11731#11772#0" expanded="true" />
+                <element signature="e#11970#12013#0" expanded="true" />
+                <element signature="e#12201#12234#0" expanded="true" />
+                <element signature="e#12402#12435#0" expanded="true" />
+                <element signature="e#12567#12568#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Event.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Event.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="1330">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="e#1629#1630#0" expanded="true" />
-                <element signature="e#1671#1672#0" expanded="true" />
-                <element signature="method#addParticipant#0;class#Event#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="3545" max-vertical-offset="4446">
+              <caret line="235" column="42" selection-start-line="235" selection-start-column="24" selection-end-line="235" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -817,8 +813,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/RegisterActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Event.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java" />
       </list>
     </option>
   </component>
@@ -1312,7 +1308,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1328,7 +1324,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.49967846" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2628651" sideWeight="0.4993573" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3518776" sideWeight="0.4993573" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1414,19 +1410,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java</url>
-          <line>181</line>
+          <line>175</line>
           <properties />
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java</url>
-          <line>144</line>
+          <line>136</line>
           <properties />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java</url>
-          <line>209</line>
+          <line>203</line>
           <properties />
           <option name="timeStamp" value="43" />
         </line-breakpoint>
@@ -1718,14 +1714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/app/libs/Parse-1.5.1.jar!/com/parse/ParseObject.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35416666" vertical-offset="5488" max-vertical-offset="8037">
-          <caret line="297" column="15" selection-start-line="297" selection-start-column="15" selection-end-line="297" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/sdk/sources/android-18/android/widget/PopupWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3327338" vertical-offset="13172" max-vertical-offset="28747">
@@ -1842,14 +1830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3803922" vertical-offset="3571" max-vertical-offset="4446">
-          <caret line="252" column="0" selection-start-line="252" selection-start-column="0" selection-end-line="252" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/sdk/sources/android-18/com/android/internal/os/ZygoteInit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6666667" vertical-offset="13262" max-vertical-offset="13604">
@@ -1868,33 +1848,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Event.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="1330">
+        <state vertical-scroll-proportion="-1.121514" vertical-offset="772" max-vertical-offset="1292">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#1629#1630#0" expanded="true" />
-            <element signature="e#1671#1672#0" expanded="true" />
             <element signature="method#addParticipant#0;class#Event#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3545" max-vertical-offset="4446">
+          <caret line="235" column="42" selection-start-line="235" selection-start-column="24" selection-end-line="235" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/Parse-1.5.1.jar!/com/parse/ParseObject.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35129312" vertical-offset="2231" max-vertical-offset="8037">
+          <caret line="127" column="28" selection-start-line="127" selection-start-column="28" selection-end-line="127" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6993865" vertical-offset="0" max-vertical-offset="5434">
-          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.86588234" vertical-offset="1627" max-vertical-offset="5320">
+          <caret line="145" column="69" selection-start-line="145" selection-start-column="69" selection-end-line="145" selection-end-column="69" />
           <folding>
-            <element signature="e#3140#3174#0" expanded="true" />
-            <element signature="e#3176#3206#0" expanded="true" />
-            <element signature="e#4943#4989#0" expanded="true" />
-            <element signature="e#7514#8594#0" expanded="true" />
-            <element signature="e#8579#8580#0" expanded="true" />
-            <element signature="e#11046#12842#0" expanded="true" />
-            <element signature="e#11237#11280#0" expanded="true" />
-            <element signature="e#11991#12032#0" expanded="true" />
-            <element signature="e#12230#12273#0" expanded="true" />
-            <element signature="e#12461#12494#0" expanded="true" />
-            <element signature="e#12662#12695#0" expanded="true" />
-            <element signature="e#12827#12828#0" expanded="true" />
+            <element signature="e#2788#2822#0" expanded="true" />
+            <element signature="e#2824#2854#0" expanded="true" />
+            <element signature="e#4612#4658#0" expanded="true" />
+            <element signature="e#7254#8334#0" expanded="true" />
+            <element signature="e#8319#8320#0" expanded="true" />
+            <element signature="e#10786#12582#0" expanded="true" />
+            <element signature="e#10977#11020#0" expanded="true" />
+            <element signature="e#11731#11772#0" expanded="true" />
+            <element signature="e#11970#12013#0" expanded="true" />
+            <element signature="e#12201#12234#0" expanded="true" />
+            <element signature="e#12402#12435#0" expanded="true" />
+            <element signature="e#12567#12568#0" expanded="true" />
           </folding>
         </state>
       </provider>

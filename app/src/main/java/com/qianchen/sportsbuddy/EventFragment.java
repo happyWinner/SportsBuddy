@@ -53,19 +53,10 @@ import java.util.List;
  *
  */
 public class EventFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     public static final int MILLISECONDS_PER_HOUR = 3600000;
     public static final int MILLISECONDS_PER_MINUTE = 60000;
 
     private static View view;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private GoogleMap map;
     private LocationManager locationManager;
@@ -132,6 +123,7 @@ public class EventFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        map.clear();
         markerEventHashMap = new HashMap<Marker, Event>();
         eventIDHashSet = new HashSet<String>();
         simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd EEE HH:mm");
@@ -150,6 +142,8 @@ public class EventFragment extends Fragment {
             // move camera to the last position
             map.moveCamera(CameraUpdateFactory.newCameraPosition(lastPosition));
         }
+
+        new CameraListener().onCameraChange(map.getCameraPosition());
     }
 
     @Override
