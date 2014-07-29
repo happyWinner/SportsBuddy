@@ -58,15 +58,10 @@ public class TeamFragment extends Fragment {
         Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
 
         setHasOptionsMenu(true);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
         teamList = new ArrayList<Team>();
         ParseUser user = ParseUser.getCurrentUser();
-        System.out.println(user.getEmail());
-        List<String> teamIdList = user.getList("teamsJoined");//ParseUser.getCurrentUser().getList("teamsJoined");
+        List<String> teamIdList = ParseUser.getCurrentUser().getList("teamsJoined");
         if (teamIdList != null) {
             for (String teamId : teamIdList) {
                 ParseQuery<Team> query = ParseQuery.getQuery("Team");
@@ -94,15 +89,21 @@ public class TeamFragment extends Fragment {
             }
         }
         teamAdapter = new TeamAdapter(getActivity(), teamList);
+    }
 
-        // inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_team, container, false);
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_team, container, false);
         // get a reference to the ListView, and attach this adapter to it
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_team);
+        ListView listView = (ListView) view.findViewById(R.id.listview_team);
         listView.setAdapter(teamAdapter);
+        return view;
+    }
 
-        return rootView;
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -10,4 +10,7 @@
     <dimen name="label_visibility_height">40dp</dimen>
     <dimen name="padding_vertical">10dp</dimen>>
     <dimen name="padding_horizontal">10dp</dimen>
+
+    <!-- Dimens related to team emblem -->
+    <dimen name="team_emblem_height">100dp</dimen>
 </resources>

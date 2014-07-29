@@ -1,6 +1,7 @@
 package com.qianchen.sportsbuddy;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 /**
@@ -25,5 +26,13 @@ public class Team extends ParseObject {
 
     public String getSportsType() {
         return getString("sportsType");
+    }
+
+//    public void setEmblem() {
+//
+//    }
+
+    public ParseFile getEmblem() {
+        return getParseFile("emblem");
     }
 }

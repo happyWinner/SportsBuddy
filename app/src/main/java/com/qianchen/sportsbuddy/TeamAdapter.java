@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.parse.ParseImageView;
 
 import java.util.List;
 
@@ -52,7 +53,9 @@ public class TeamAdapter extends BaseAdapter {
         if (team != null) {
             ((TextView) view.findViewById(R.id.text_team_name)).setText(team.getName());
             ((TextView) view.findViewById(R.id.text_team_type)).setText(team.getSportsType());
-            ((ImageView) view.findViewById(R.id.team_emblem)).setImageResource(R.drawable.ic_launcher);
+            ParseImageView imageView = (ParseImageView) view.findViewById(R.id.team_emblem);
+            imageView.setParseFile(team.getEmblem());
+            imageView.loadInBackground();
         }
 
         return view;
