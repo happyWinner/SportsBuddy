@@ -60,11 +60,12 @@ public class TeamFragment extends Fragment {
         setHasOptionsMenu(true);
 
         teamList = new ArrayList<Team>();
-        ParseUser user = ParseUser.getCurrentUser();
         List<String> teamIdList = ParseUser.getCurrentUser().getList("teamsJoined");
         if (teamIdList != null) {
             for (String teamId : teamIdList) {
                 ParseQuery<Team> query = ParseQuery.getQuery("Team");
+                // try to load from the cache; but if that fails, load results from the network
+                query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
                 try {
                     teamList.add(query.get(teamId));
                 } catch (ParseException e) {
@@ -99,11 +100,6 @@ public class TeamFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.listview_team);
         listView.setAdapter(teamAdapter);
         return view;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

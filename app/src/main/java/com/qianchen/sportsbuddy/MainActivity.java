@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.Locale;
@@ -54,7 +55,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Parse.initialize(this, getString(R.string.application_id), getString(R.string.client_key));
 
         // restore cached user account if there is one
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseUser currentUser = null;
+        try {
+            currentUser = ParseUser.getCurrentUser().fetch();
+        } catch (ParseException e) {
+        }
         if (currentUser == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -227,7 +232,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 case 2:
                     fragment = new TeamFragment();
-                    break;
+                break;
 
                 case 3:
                 case 4:
