@@ -2,7 +2,6 @@ package com.qianchen.sportsbuddy;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,16 +102,16 @@ public class Event extends ParseObject {
         return getString("notes");
     }
 
-    public void addParticipant(ParseUser participant) {
-        List<Object> participants = getList("participants");
+    public void addParticipant(String participant) {
+        List<String> participants = getList("participants");
         if (participants == null) {
-            participants = new ArrayList<Object>();
+            participants = new ArrayList<String>();
             participants.add(participant);
         }
         put("participants", participants);
     }
 
-    public List<ParseUser> getParticipants() {
+    public List<String> getParticipants() {
         return getList("participants");
     }
 }

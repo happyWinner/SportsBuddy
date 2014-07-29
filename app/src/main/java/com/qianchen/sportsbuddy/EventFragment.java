@@ -3,6 +3,7 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -87,6 +89,8 @@ public class EventFragment extends Fragment {
         Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -177,6 +181,14 @@ public class EventFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() ==  R.id.event_new) {
+            startActivity(new Intent(getActivity(), NewEventActivity.class));
+        }
+        return true;
+    }
+
     class CameraListener implements GoogleMap.OnCameraChangeListener {
 
         @Override
@@ -257,7 +269,7 @@ public class EventFragment extends Fragment {
         @Override
         public void onClick(View v) {
             event.increment("currentPeople");
-            event.addParticipant(ParseUser.getCurrentUser());
+            event.addParticipant(ParseUser.getCurrentUser().getObjectId());
             event.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {

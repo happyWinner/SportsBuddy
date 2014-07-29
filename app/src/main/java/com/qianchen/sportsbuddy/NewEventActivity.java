@@ -192,7 +192,7 @@ public class NewEventActivity extends Activity {
             event.setCurrentPeople(1);
             event.setVisibility(visibility);
             event.setNotes(notes);
-            event.addParticipant(ParseUser.getCurrentUser());
+            event.addParticipant(ParseUser.getCurrentUser().getObjectId());
             event.saveInBackground(new SaveEventCallback());
         }
     }

@@ -22,7 +22,8 @@ import com.parse.ParseUser;
 
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener, EventFragment.OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener,
+        EventFragment.OnFragmentInteractionListener, TeamFragment.OnFragmentInteractionListener {
 
     /**
      * Total number of pages.
@@ -129,16 +130,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.event_new:
-                startActivity(new Intent(this, NewEventActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -227,10 +219,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
          */
         public static Fragment newInstance(int sectionNumber) {
             Fragment fragment;
-            if (sectionNumber == 1) {
-                fragment = new EventFragment();
-            } else {
-                fragment = new PlaceholderFragment();
+            switch (sectionNumber) {
+                case 1:
+                    fragment = new EventFragment();
+                    break;
+
+                case 2:
+                    fragment = new TeamFragment();
+                    break;
+
+                case 3:
+                case 4:
+                default:
+                    fragment = new PlaceholderFragment();
             }
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);

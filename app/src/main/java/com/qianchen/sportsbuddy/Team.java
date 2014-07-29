@@ -11,19 +11,22 @@ import com.parse.ParseObject;
 @ParseClassName("Team")
 public class Team extends ParseObject {
 
-    public void setTeamName(String teamName) {
-        put("teamName", teamName);
-    }
+    public String name;
+    public String type;
 
-    public String getTeamName() {
-        return getString("teamName");
-    }
-
-    public void setTeamType(String teamType) {
-        put("teamType", teamType);
-    }
-
-    public String setTeamType() {
-        return getString("teamType");
-    }
+//    public void setTeamName(String teamName) {
+//        put("teamName", teamName);
+//    }
+//
+//    public String getTeamName() {
+//        return getString("teamName");
+//    }
+//
+//    public void setTeamType(String teamType) {
+//        put("teamType", teamType);
+//    }
+//
+//    public String setTeamType() {
+//        return getString("teamType");
+//    }
 }

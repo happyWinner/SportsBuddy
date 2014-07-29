@@ -72,9 +72,11 @@
     <string name="error_no_location_found">No location found!</string>
     <string name="error_no_location_selected">Please choose location first!</string>
 
-    <!--Strings related to event popup window -->
+    <!-- Strings related to event popup window -->
     <string name="label_current_people">Current People</string>
     <string name="button_join">Join</string>
     <string name="event_join_successfully">You have successfully joined the event!</string>
+    
+    <!-- Strings related to list item team -->
 
 </resources>
