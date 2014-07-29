@@ -9,9 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +63,36 @@ public class TeamFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Team team1 = new Team();
-        team1.name = "MAN";
-        team1.type = "Soccer";
-        Team team2 = new Team();
-        team2.name = "UNITED";
-        team2.type = "Pool";
         teamList = new ArrayList<Team>();
-        teamList.add(team1);
-        teamList.add(team2);
+        ParseUser user = ParseUser.getCurrentUser();
+        System.out.println(user.getEmail());
+        List<String> teamIdList = user.getList("teamsJoined");//ParseUser.getCurrentUser().getList("teamsJoined");
+        if (teamIdList != null) {
+            for (String teamId : teamIdList) {
+                ParseQuery<Team> query = ParseQuery.getQuery("Team");
+                try {
+                    teamList.add(query.get(teamId));
+                } catch (ParseException e) {
+                    switch (e.getCode()) {
+                        case ParseException.INTERNAL_SERVER_ERROR:
+                            Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                            break;
+
+                        case ParseException.CONNECTION_FAILED:
+                            Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                            break;
+
+                        case ParseException.TIMEOUT:
+                            Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                            break;
+
+                        default:
+                            Toast.makeText(getActivity(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                            break;
+                    }
+                }
+            }
+        }
         teamAdapter = new TeamAdapter(getActivity(), teamList);
 
         // inflate the layout for this fragment
@@ -106,12 +131,7 @@ public class TeamFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.team_new) {
-            Team team3 = new Team();
-            team3.name = "HAPPY";
-            team3.type = "Winner";
-            teamList.add(team3);
-        }
+        // todo
         teamAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }

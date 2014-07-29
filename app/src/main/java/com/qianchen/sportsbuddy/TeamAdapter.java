@@ -50,8 +50,8 @@ public class TeamAdapter extends BaseAdapter {
 
         Team team = teams.get(position);
         if (team != null) {
-            ((TextView) view.findViewById(R.id.text_team_name)).setText(team.name);
-            ((TextView) view.findViewById(R.id.text_team_type)).setText(team.type);
+            ((TextView) view.findViewById(R.id.text_team_name)).setText(team.getName());
+            ((TextView) view.findViewById(R.id.text_team_type)).setText(team.getSportsType());
             ((ImageView) view.findViewById(R.id.team_emblem)).setImageResource(R.drawable.ic_launcher);
         }
 

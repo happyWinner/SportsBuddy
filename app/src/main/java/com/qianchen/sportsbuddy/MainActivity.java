@@ -57,6 +57,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
         // Set up the action bar.
