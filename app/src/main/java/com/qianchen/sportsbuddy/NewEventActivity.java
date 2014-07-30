@@ -24,6 +24,9 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NewEventActivity extends Activity {
 
     public static final int REQUEST_CODE = 75;
@@ -187,14 +190,34 @@ public class NewEventActivity extends Activity {
             event.setVisibility(visibility);
             event.setNotes(notes);
             event.addParticipant(ParseUser.getCurrentUser().getObjectId());
-            event.saveInBackground(new SaveEventCallback());
+            event.saveInBackground(new SaveEventCallback(event));
         }
     }
 
     private class SaveEventCallback extends SaveCallback {
+        Event event;
+
+        public SaveEventCallback(Event event) {
+            this.event = event;
+        }
+
         @Override
         public void done(ParseException e) {
             if (e == null) {
+                // update user's event information
+                ParseUser user = ParseUser.getCurrentUser();
+                List<String> eventList = user.getList("eventsJoined");
+                if (eventList == null) {
+                    eventList = new ArrayList<String>();
+                }
+                eventList.add(event.getObjectId());
+                user.put("eventsJoined", eventList);
+                user.saveInBackground();
+                try {
+                    ParseUser.getCurrentUser().fetch();
+                } catch (ParseException userException) {
+                }
+
                 Toast.makeText(getApplicationContext(), getString(R.string.event_created_successfully), Toast.LENGTH_SHORT).show();
             } else {
                 switch (e.getCode()) {

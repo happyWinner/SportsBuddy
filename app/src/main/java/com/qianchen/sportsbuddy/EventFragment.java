@@ -39,6 +39,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -268,12 +269,34 @@ public class EventFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            ParseUser user = ParseUser.getCurrentUser();
+            List<String> eventList = user.getList("eventsJoined");
+            if (eventList != null && eventList.contains(event.getObjectId())) {
+                // notify user if s/he has already joined the event
+                Toast.makeText(getActivity(), getString(R.string.error_already_joined_event), Toast.LENGTH_LONG).show();
+                return;
+            }
+
             event.increment("currentPeople");
             event.addParticipant(ParseUser.getCurrentUser().getObjectId());
             event.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
+                        // update user's event information
+                        ParseUser user = ParseUser.getCurrentUser();
+                        List<String> eventList = user.getList("eventsJoined");
+                        if (eventList == null) {
+                            eventList = new ArrayList<String>();
+                        }
+                        eventList.add(event.getObjectId());
+                        user.put("eventsJoined", eventList);
+                        user.saveInBackground();
+                        try {
+                            ParseUser.getCurrentUser().fetch();
+                        } catch (ParseException userException) {
+                        }
+
                         Toast.makeText(getActivity(), getString(R.string.event_join_successfully), Toast.LENGTH_LONG).show();
 
                         // clear the mark on the map if event has enough participants

@@ -29,12 +29,16 @@
     <string name="error_email_taken">The email is already taken</string>
     <string name="error_incorrect_email_password">Incorrect email or password</string>
     <string name="error_unverified_email">Please verify your email first</string>
+    <string name="register_successfully">Successfully registered!</string>
 
     <!-- Strings related to tab activity -->
     <string name="title_event">Event</string>
     <string name="title_team">Team</string>
     <string name="title_discussion">Discussion</string>
     <string name="title_profile">Profile</string>
+
+    <!-- Strings related to event fragment -->
+    <string name="error_already_joined_event">You have already joined this event!</string>
 
     <!-- Strings related to new event activity -->
     <string name="label_sport_type">Sport Type</string>

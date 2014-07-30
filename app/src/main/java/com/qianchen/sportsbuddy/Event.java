@@ -106,8 +106,8 @@ public class Event extends ParseObject {
         List<String> participants = getList("participants");
         if (participants == null) {
             participants = new ArrayList<String>();
-            participants.add(participant);
         }
+        participants.add(participant);
         put("participants", participants);
     }
 

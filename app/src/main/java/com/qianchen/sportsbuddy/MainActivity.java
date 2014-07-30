@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -72,6 +73,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             }
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo("email", currentUser.getEmail());
+            query.whereEqualTo("emailVerified", true);
+            query.getFirstInBackground(new GetCallback<ParseUser>() {
+                public void done(ParseUser user, ParseException e) {
+                    if (user == null) {
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+                    }
+                }
+            });
         }
 
 

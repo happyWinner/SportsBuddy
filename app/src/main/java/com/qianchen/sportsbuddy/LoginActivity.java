@@ -313,7 +313,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                                         public void done(ParseUser user, ParseException e) {
                                             if (user != null) {
                                                 // Hooray! The user is logged in.
-                                                //todo : start a new activity
                                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                             } else {
                                                 exceptionHandler(e, getString(R.string.error_unverified_email));

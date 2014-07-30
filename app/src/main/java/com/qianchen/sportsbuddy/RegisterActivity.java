@@ -1,7 +1,6 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -119,9 +118,8 @@ public class RegisterActivity extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
-                    //TODO
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    Toast.makeText(getApplicationContext(), "Succeed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.register_successfully), Toast.LENGTH_LONG).show();
+                    finish();
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong

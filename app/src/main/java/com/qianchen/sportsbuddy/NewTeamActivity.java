@@ -218,7 +218,7 @@ public class NewTeamActivity extends Activity {
             }
             String sportsType = sportsTypeSpinner.getSelectedItem().toString();
 
-            //  set default emblem if user hasn't upload customized emblem
+            // set default emblem if user hasn't upload customized emblem
             if (emblem == null) {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_team_emblem).compress(Bitmap.CompressFormat.PNG, 100, stream);
