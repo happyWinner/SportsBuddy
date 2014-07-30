@@ -2,12 +2,14 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -99,6 +101,14 @@ public class TeamFragment extends Fragment {
         // get a reference to the ListView, and attach this adapter to it
         ListView listView = (ListView) view.findViewById(R.id.listview_team);
         listView.setAdapter(teamAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), TeamInfoActivity.class);
+                intent.putExtra("teamID", teamList.get(position).getObjectId());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -129,7 +139,12 @@ public class TeamFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // todo
-        teamAdapter.notifyDataSetChanged();
+        switch (item.getItemId()) {
+            case R.id.team_new:
+                startActivity(new Intent(getActivity(), NewTeamActivity.class));
+                break;
+        }
+//        teamAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 

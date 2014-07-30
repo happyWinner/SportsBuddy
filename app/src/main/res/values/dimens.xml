@@ -13,4 +13,8 @@
 
     <!-- Dimens related to team emblem -->
     <dimen name="team_emblem_height">100dp</dimen>
+
+    <!-- Dimens related to new team activity -->
+    <dimen name="text_size">25sp</dimen>
+    <dimen name="new_team_padding_top">30dp</dimen>
 </resources>

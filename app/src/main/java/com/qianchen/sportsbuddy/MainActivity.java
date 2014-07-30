@@ -46,6 +46,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      */
     ViewPager mViewPager;
 
+    private int lastTabPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +102,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setTabListener(this)
             );
         }
-    }
 
+        if (savedInstanceState != null) {
+            lastTabPosition = savedInstanceState.getInt("lastTabPosition");
+            onTabSelected(actionBar.getTabAt(lastTabPosition), null);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,6 +147,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // store the last position
+        lastTabPosition = tab.getPosition();
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());

@@ -76,7 +76,11 @@
     <string name="label_current_people">Current People</string>
     <string name="button_join">Join</string>
     <string name="event_join_successfully">You have successfully joined the event!</string>
-    
-    <!-- Strings related to list item team -->
 
+    <!-- Strings related to new team window -->
+    <string name="label_team_name">Team Name</string>
+    <string name="label_sports_type">Sports Type</string>
+    <string name="label_upload_emblem">Upload Emblem</string>
+    <string name="hint_team_description">Give a short description of your team...</string>
+    <string name="button_create">Create</string>
 </resources>
