@@ -31,9 +31,9 @@ public class Team extends ParseObject {
         return getString("sportsType");
     }
 
-//    public void setEmblem() {
-//
-//    }
+    public void setEmblem(ParseFile emblem) {
+        put("emblem", emblem);
+    }
 
     public ParseFile getEmblem() {
         return getParseFile("emblem");

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Locale;
@@ -55,6 +56,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // authenticates this client to Parse
         Parse.initialize(this, getString(R.string.application_id), getString(R.string.client_key));
+
+        // clear all cached results when the app first launches
+        ParseQuery.clearAllCachedResults();
 
         // restore cached user account if there is one
         ParseUser currentUser = null;

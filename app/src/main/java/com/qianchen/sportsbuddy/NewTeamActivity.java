@@ -2,7 +2,14 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -20,20 +27,27 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewTeamActivity extends Activity {
 
+    public static final int UPLOAD_EMBLEM_REQUEST_CODE = 4;
+    public static final int EMBLEM_WIDTH = 1000;
+    public static final int EMBLEM_HEIGHT = 1000;
+
     private NoDefaultSpinner sportsTypeSpinner;
     private EditText editTeamName;
     private ImageButton buttonUploadEmblem;
     private EditText editTeamDescription;
+    private ParseFile emblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +103,15 @@ public class NewTeamActivity extends Activity {
         // register a touch listener to the layout
         ((TableLayout) findViewById(R.id.table_layout)).setOnTouchListener(new TouchListener());
 
+        // set "Upload Emblem" button listener
+        buttonUploadEmblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent choosePictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(choosePictureIntent, UPLOAD_EMBLEM_REQUEST_CODE);
+            }
+        });
+
         // set "Cancel" button listener
         ((Button) findViewById(R.id.button_cancel_team)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +147,51 @@ public class NewTeamActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPLOAD_EMBLEM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // get the emblem data
+            Uri emblemData = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(emblemData, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            // resize the emblem image
+            Bitmap bitmapOriginal = BitmapFactory.decodeFile(picturePath);
+            int width = bitmapOriginal.getWidth();
+            int height = bitmapOriginal.getHeight();
+
+            // calculate the scale
+            float scaleWidth = ((float) EMBLEM_WIDTH) / width;
+            float scaleHeight = ((float) EMBLEM_HEIGHT) / height;
+
+            // create matrix for the manipulation
+            Matrix matrix = new Matrix();
+            // resize the bit map
+            matrix.postScale(scaleWidth, scaleHeight);
+
+            // recreate the new Bitmap
+            Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOriginal, 0, 0, width, height, matrix, true);
+
+            // make a Drawable from Bitmap to allow to set the BitMap
+            // to the ImageView, ImageButton or what ever
+            BitmapDrawable emblemDrawable = new BitmapDrawable(resizedBitmap);
+
+            // show the emblem selected on the image button
+            buttonUploadEmblem.setImageDrawable(emblemDrawable);
+
+            // convert the emblem as ParseFile
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            emblem = new ParseFile("emblem.png",byteArray);
+        }
+    }
+
     private void hideSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -150,9 +218,11 @@ public class NewTeamActivity extends Activity {
             }
             String sportsType = sportsTypeSpinner.getSelectedItem().toString();
 
-            // upload emblem
-            //todo
-
+            //  check whether emblem
+            if (emblem == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_empty_emblem), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // get team description
             String teamDescription = editTeamDescription.getText().toString();
@@ -192,6 +262,7 @@ public class NewTeamActivity extends Activity {
             Team team = new Team();
             team.setName(teamName);
             team.setSportsType(sportsType);
+            team.setEmblem(emblem);
             team.setDescription(teamDescription);
             team.setLeaderID(ParseUser.getCurrentUser().getObjectId());
             team.addMember(ParseUser.getCurrentUser().getObjectId());
