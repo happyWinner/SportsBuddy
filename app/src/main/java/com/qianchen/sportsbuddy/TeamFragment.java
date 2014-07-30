@@ -34,6 +34,7 @@ import java.util.List;
  */
 public class TeamFragment extends Fragment {
 
+    public static final int REQUEST_CODE = 28;
     private OnFragmentInteractionListener mListener;
     private List<Team> teamList;
     private TeamAdapter teamAdapter;
@@ -71,23 +72,7 @@ public class TeamFragment extends Fragment {
                 try {
                     teamList.add(query.get(teamId));
                 } catch (ParseException e) {
-                    switch (e.getCode()) {
-                        case ParseException.INTERNAL_SERVER_ERROR:
-                            Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
-                            break;
-
-                        case ParseException.CONNECTION_FAILED:
-                            Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
-                            break;
-
-                        case ParseException.TIMEOUT:
-                            Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
-                            break;
-
-                        default:
-                            Toast.makeText(getActivity(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
-                            break;
-                    }
+                    exceptionHandler(e);
                 }
             }
         }
@@ -141,11 +126,27 @@ public class TeamFragment extends Fragment {
         // todo
         switch (item.getItemId()) {
             case R.id.team_new:
-                startActivity(new Intent(getActivity(), NewTeamActivity.class));
+                startActivityForResult(new Intent(getActivity(), NewTeamActivity.class), REQUEST_CODE);
                 break;
         }
-//        teamAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
+            String teamId = data.getStringExtra("teamId");
+            ParseQuery<Team> query = ParseQuery.getQuery("Team");
+            // try to load from the cache; but if that fails, load results from the network
+            query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+            try {
+                teamList.add(query.get(teamId));
+            } catch (ParseException e) {
+                exceptionHandler(e);
+            }
+        }
+        teamAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -163,4 +164,23 @@ public class TeamFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    private void exceptionHandler(ParseException e) {
+        switch (e.getCode()) {
+            case ParseException.INTERNAL_SERVER_ERROR:
+                Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.CONNECTION_FAILED:
+                Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.TIMEOUT:
+                Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                Toast.makeText(getActivity(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 }

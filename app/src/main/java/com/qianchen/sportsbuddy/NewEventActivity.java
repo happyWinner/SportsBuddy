@@ -3,7 +3,6 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,8 +23,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import java.util.Date;
 
 public class NewEventActivity extends Activity {
 
@@ -146,12 +143,10 @@ public class NewEventActivity extends Activity {
 
             // get date
             long dateMilliseconds = calendarView.getDate();
-            Log.d(LOG_TAG, (new Date(dateMilliseconds)).toString());
 
             // get time
             int hour = timePicker.getCurrentHour();
             int minute = timePicker.getCurrentMinute();
-            Log.d(LOG_TAG, hour + " " + minute);
 
             // get location
             if (latLng == null) {
@@ -162,10 +157,10 @@ public class NewEventActivity extends Activity {
             // get max people
             String maxPeople = editMaxPeople.getText().toString();
             if (maxPeople == null || maxPeople.length() == 0) {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_empty_max_people), Toast.LENGTH_SHORT).show();
+                editMaxPeople.setError(getString(R.string.error_empty_max_people));
+                editMaxPeople.requestFocus();
                 return;
             }
-            Log.d(LOG_TAG, maxPeople);
 
             // get visibility
             if (visibilitySpinner.getSelectedItem() == null) {
@@ -173,11 +168,9 @@ public class NewEventActivity extends Activity {
                 return;
             }
             String visibility = visibilitySpinner.getSelectedItem().toString();
-            Log.d(LOG_TAG, visibility);
 
             // get notes
             String notes = editNotes.getText().toString();
-            Log.d(LOG_TAG, notes);
 
             // upload event data to Parse.com
             Event event = new Event();

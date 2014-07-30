@@ -4,6 +4,9 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A team object.
  *
@@ -34,5 +37,34 @@ public class Team extends ParseObject {
 
     public ParseFile getEmblem() {
         return getParseFile("emblem");
+    }
+
+    public void setDescription(String description) {
+        put("description", description);
+    }
+
+    public String getDescription() {
+        return getString("description");
+    }
+
+    public void setLeaderID(String leader) {
+        put("leaderID", leader);
+    }
+
+    public String getLeaderID() {
+        return getString("leaderID");
+    }
+
+    public void addMember(String member) {
+        List<String> members = getList("members");
+        if (members == null) {
+            members = new ArrayList<String>();
+            members.add(member);
+        }
+        put("members", members);
+    }
+
+    public List<String> getMembers() {
+        return getList("members");
     }
 }
