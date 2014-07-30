@@ -105,7 +105,7 @@ public class NewEventActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            latLng = data.getParcelableExtra("latLng");
+            latLng = data.getParcelableExtra("locationLatLng");
             addressText = data.getStringExtra("addressText");
             ((Button) findViewById(R.id.button_location)).setText(addressText);
         }

@@ -34,7 +34,7 @@ public class NewEventMapActivity extends Activity {
     private SearchView searchView;
     private LocationManager locationManager;
     private GoogleMap map;
-    private LatLng latLng;
+    private LatLng locationLatLng;
     private String addressText;
 
     @Override
@@ -45,6 +45,7 @@ public class NewEventMapActivity extends Activity {
         // get Google Map reference
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
+        map.setOnMapClickListener(new MapClickListener());
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -86,11 +87,11 @@ public class NewEventMapActivity extends Activity {
     private class ConfirmListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            if (latLng == null) {
+            if (locationLatLng == null) {
                 Toast.makeText(getApplicationContext(), getString(R.string.error_no_location_selected), Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent();
-                intent.putExtra("latLng", latLng);
+                intent.putExtra("locationLatLng", locationLatLng);
                 intent.putExtra("addressText", addressText);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -119,6 +120,35 @@ public class NewEventMapActivity extends Activity {
         return true;
     }
 
+    class MapClickListener implements GoogleMap.OnMapClickListener {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            // clears all the existing markers on the map
+            map.clear();
+
+            Geocoder geocoder = new Geocoder(getApplication());
+            Address address = null;
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                if (addresses == null || addresses.size() == 0) {
+                    throw new IOException();
+                }
+                address = addresses.get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            addressText = String.format("%s, %s",
+                    address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
+                    address.getAdminArea() != null ? address.getAdminArea() : address.getCountryName());
+
+            locationLatLng = latLng;
+
+            map.addMarker(new MarkerOptions().position(latLng).title(addressText)).showInfoWindow();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -137,7 +167,7 @@ public class NewEventMapActivity extends Activity {
 
             try {
                 // getting a maximum of 3 Address that matches the input text
-                addresses = geocoder.getFromLocationName(locationName[0], 3);
+                addresses = geocoder.getFromLocationName(locationName[0], 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -158,17 +188,17 @@ public class NewEventMapActivity extends Activity {
                 Address address = (Address) addresses.get(i);
 
                 // creating an instance of GeoPoint, to display in Google Map
-                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                locationLatLng = new LatLng(address.getLatitude(), address.getLongitude());
 
                 addressText = String.format("%s, %s",
                         address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
                         address.getAdminArea() != null ? address.getAdminArea() : address.getCountryName());
 
-                map.addMarker(new MarkerOptions().position(latLng).title(addressText)).showInfoWindow();
+                map.addMarker(new MarkerOptions().position(locationLatLng).title(addressText)).showInfoWindow();
 
                 // locate the first location
                 if (i == 0) {
-                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    map.animateCamera(CameraUpdateFactory.newLatLng(locationLatLng));
                 }
             }
         }

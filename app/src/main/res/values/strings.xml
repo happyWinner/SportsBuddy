@@ -45,12 +45,15 @@
     <string name="prompt_sport_type">[Please Select A Sport]</string>
 
     <string-array name="sport_type_array">
+        <item>Baseball</item>
         <item>Basketball</item>
+        <item>Cycling</item>
         <item>Pool</item>
         <item>Racquetball</item>
         <item>Soccer</item>
         <item>Squash</item>
         <item>Tennis</item>
+        <item>Volleyball</item>
     </string-array>
 
     <string name="label_date">Date</string>
@@ -92,4 +95,6 @@
     <string name="error_empty_sports_type">Please select a sports type!</string>
     <string name="error_team_name_taken">The team name is already taken</string>
     <string name="team_created_successfully">Your team is created successfully!</string>
+    <string name="title_activity_discover_team">DiscoverTeamActivity</string>
+
 </resources>
