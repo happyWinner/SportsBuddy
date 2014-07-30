@@ -61,15 +61,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         ParseQuery.clearAllCachedResults();
 
         // restore cached user account if there is one
-        ParseUser currentUser = null;
-        try {
-            currentUser = ParseUser.getCurrentUser().fetch();
-        } catch (ParseException e) {
-        }
+        ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+        } else {
+            try {
+                currentUser = currentUser.fetch();
+            } catch (ParseException e) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
         }
+
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();

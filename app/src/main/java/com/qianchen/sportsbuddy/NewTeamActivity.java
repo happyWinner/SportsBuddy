@@ -20,7 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -45,9 +45,10 @@ public class NewTeamActivity extends Activity {
 
     private NoDefaultSpinner sportsTypeSpinner;
     private EditText editTeamName;
-    private ImageButton buttonUploadEmblem;
+    private Button buttonUploadEmblem;
     private EditText editTeamDescription;
     private ParseFile emblem;
+    private ImageView emblemImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,8 @@ public class NewTeamActivity extends Activity {
         // get references of views
         editTeamName = (EditText) findViewById(R.id.edit_team_name);
         sportsTypeSpinner = (NoDefaultSpinner) findViewById(R.id.spinner_sports_type);
-        buttonUploadEmblem = (ImageButton) findViewById(R.id.button_upload_emblem);
+        buttonUploadEmblem = (Button) findViewById(R.id.button_upload_emblem);
+        emblemImageView = (ImageView) findViewById(R.id.image_view_emblem);
         editTeamDescription = (EditText) findViewById(R.id.edit_team_description);
 
 
@@ -87,8 +89,6 @@ public class NewTeamActivity extends Activity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sportTypeAdapter = ArrayAdapter.createFromResource(this, R.array.sport_type_array, android.R.layout.simple_spinner_item);
@@ -182,13 +182,13 @@ public class NewTeamActivity extends Activity {
             BitmapDrawable emblemDrawable = new BitmapDrawable(resizedBitmap);
 
             // show the emblem selected on the image button
-            buttonUploadEmblem.setImageDrawable(emblemDrawable);
+            emblemImageView.setImageDrawable(emblemDrawable);
 
             // convert the emblem as ParseFile
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            emblem = new ParseFile("emblem.png",byteArray);
+            emblem = new ParseFile("emblem.png", byteArray);
         }
     }
 
@@ -218,10 +218,12 @@ public class NewTeamActivity extends Activity {
             }
             String sportsType = sportsTypeSpinner.getSelectedItem().toString();
 
-            //  check whether emblem
+            //  set default emblem if user hasn't upload customized emblem
             if (emblem == null) {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_empty_emblem), Toast.LENGTH_SHORT).show();
-                return;
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_team_emblem).compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                emblem = new ParseFile("emblem.png", byteArray);
             }
 
             // get team description

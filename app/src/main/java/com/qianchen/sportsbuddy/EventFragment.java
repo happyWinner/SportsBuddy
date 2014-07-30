@@ -285,6 +285,8 @@ public class EventFragment extends Fragment {
 
                         // dismiss the popup window
                         popupWindow.dismiss();
+
+                        // todo: update event participants
                     } else {
                         switch (e.getCode()) {
                             case ParseException.INTERNAL_SERVER_ERROR:

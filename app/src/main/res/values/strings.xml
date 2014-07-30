@@ -86,7 +86,6 @@
     <string name="prompt_sports_type">[Please Select A Sports Type]</string>
     <string name="error_empty_team_name">Please input team name!</string>
     <string name="error_empty_sports_type">Please select a sports type!</string>
-    <string name="error_empty_emblem">Please select an emblem!</string>
     <string name="error_team_name_taken">The team name is already taken</string>
     <string name="team_created_successfully">Your team is created successfully!</string>
 </resources>
