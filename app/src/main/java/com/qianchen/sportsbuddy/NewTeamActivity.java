@@ -2,12 +2,10 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -40,15 +38,16 @@ import java.util.List;
 public class NewTeamActivity extends Activity {
 
     public static final int UPLOAD_EMBLEM_REQUEST_CODE = 4;
-    public static final int EMBLEM_WIDTH = 1000;
-    public static final int EMBLEM_HEIGHT = 1000;
+    public static final int CROP_EMBLEM_REQUEST_CODE = 411;
+    public static final int EMBLEM_WIDTH = 400;
+    public static final int EMBLEM_HEIGHT = 400;
 
     private NoDefaultSpinner sportsTypeSpinner;
     private EditText editTeamName;
     private Button buttonUploadEmblem;
     private EditText editTeamDescription;
-    private ParseFile emblem;
     private ImageView emblemImageView;
+    private ParseFile emblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,44 +150,32 @@ public class NewTeamActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UPLOAD_EMBLEM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            // get the emblem data
-            Uri emblemData = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(emblemData, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+            // ask user to crop the image
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(data.getData(), "image/*");
+            intent.putExtra("crop", "true");
+            // aspectX aspectY
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            // outputX outputY
+            intent.putExtra("outputX", EMBLEM_WIDTH);
+            intent.putExtra("outputY", EMBLEM_HEIGHT);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, CROP_EMBLEM_REQUEST_CODE);
+        }
 
-            // resize the emblem image
-            Bitmap bitmapOriginal = BitmapFactory.decodeFile(picturePath);
-            int width = bitmapOriginal.getWidth();
-            int height = bitmapOriginal.getHeight();
+        if (requestCode == CROP_EMBLEM_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap photo = extras.getParcelable("data");
+                Drawable drawable = new BitmapDrawable(this.getResources(),photo);
+                emblemImageView.setImageDrawable(drawable);
 
-            // calculate the scale
-            float scaleWidth = ((float) EMBLEM_WIDTH) / width;
-            float scaleHeight = ((float) EMBLEM_HEIGHT) / height;
-
-            // create matrix for the manipulation
-            Matrix matrix = new Matrix();
-            // resize the bit map
-            matrix.postScale(scaleWidth, scaleHeight);
-
-            // recreate the new Bitmap
-            Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOriginal, 0, 0, width, height, matrix, true);
-
-            // make a Drawable from Bitmap to allow to set the BitMap
-            // to the ImageView, ImageButton or what ever
-            BitmapDrawable emblemDrawable = new BitmapDrawable(resizedBitmap);
-
-            // show the emblem selected on the image button
-            emblemImageView.setImageDrawable(emblemDrawable);
-
-            // convert the emblem as ParseFile
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            emblem = new ParseFile("emblem.png", byteArray);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                emblem = new ParseFile("emblem.png", byteArray);
+            }
         }
     }
 
