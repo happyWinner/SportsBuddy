@@ -2,7 +2,9 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,13 +26,15 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class NewEventActivity extends Activity {
 
     public static final int REQUEST_CODE = 75;
-    private static final String LOG_TAG = NewEventActivity.class.getSimpleName();
+    public static final int OFFSET_MILLIS = 1000;
 
     private NoDefaultSpinner sportTypeSpinner;
     private NoDefaultSpinner visibilitySpinner;
@@ -60,6 +64,25 @@ public class NewEventActivity extends Activity {
         timePicker = (TimePicker) findViewById(R.id.time_picker);
         editMaxPeople = (EditText) findViewById(R.id.edit_max_people);
         editNotes = (EditText) findViewById(R.id.edit_notes);
+
+        // set the minimum date as today in the calendar view
+        calendarView.setMinDate(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Log.e("zzz", dateFormat.format(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS));
+        // Workaround for CalendarView bug relating to setMinDate():
+        // https://code.google.com/p/android/issues/detail?id=42750
+        // Set then reset the date on the calendar so that it properly
+        // shows today's date. The choice of 24 months is arbitrary.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (calendarView != null) {
+                Calendar date = Calendar.getInstance();
+                date.add(Calendar.MONTH, 24);
+                calendarView.setDate(date.getTimeInMillis(), false, true);
+                date.add(Calendar.MONTH, -24);
+                calendarView.setDate(date.getTimeInMillis(), false, true);
+            }
+        }
+
 
         sportTypeSpinner = (NoDefaultSpinner) findViewById(R.id.spinner_sport_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
