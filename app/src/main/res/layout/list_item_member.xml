@@ -6,18 +6,18 @@
     android:orientation="vertical">
 
     <com.parse.ParseImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="@dimen/team_info_avartar_width"
+        android:layout_height="@dimen/team_info_avartar_height"
         android:gravity="center"
         android:id="@+id/team_info_member_avartar"/>
     <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingTop="@dimen/team_info_member_padding_top"
         android:paddingBottom="@dimen/team_info_member_padding_bottom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:id="@+id/team_info_member_name"
-        android:textSize="@dimen/text_size"/>
+        android:id="@+id/team_info_member_name"/>
 
 </LinearLayout>
 

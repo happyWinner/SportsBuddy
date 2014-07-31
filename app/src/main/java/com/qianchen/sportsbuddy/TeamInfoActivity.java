@@ -27,6 +27,7 @@ import java.util.List;
 public class TeamInfoActivity extends Activity {
 
     public static final String CAPTAIN_SUFFIX = " (C)";
+    public static final int MANAGE_REQUEST_REQUEST_CODE = 67;
     private Team team;
     private List<ParseUser> members;
     private ParseImageView teamEmblem;
@@ -68,6 +69,13 @@ public class TeamInfoActivity extends Activity {
         teamEmblem.loadInBackground();
         teamName.setText(team.getName());
 
+        showMembers();
+
+        // set "Leave Team" button listener
+        ((Button) findViewById(R.id.button_leave)).setOnClickListener(new LeaveListener());
+    }
+
+    private void showMembers() {
         // get members list
         membersIDs = team.getMembers();
         members = new ArrayList<ParseUser>();
@@ -87,9 +95,6 @@ public class TeamInfoActivity extends Activity {
         for (int index = 0; index < members.size(); ++index) {
             linearLayout.addView(addMemberInfo(index));
         }
-
-        // set "Leave Team" button listener
-        ((Button) findViewById(R.id.button_leave)).setOnClickListener(new LeaveListener());
     }
 
     private View addMemberInfo(int index) {
@@ -99,8 +104,7 @@ public class TeamInfoActivity extends Activity {
 
         // show member avartar
         memberAvartar = (ParseImageView) layout.findViewById(R.id.team_info_member_avartar);
-        // todo: change back to user avartar
-        memberAvartar.setParseFile(team.getEmblem());
+        memberAvartar.setParseFile(members.get(index).getParseFile("avartar"));
         memberAvartar.loadInBackground();
 
         // show member name
@@ -119,7 +123,13 @@ public class TeamInfoActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.team_info, menu);
+        if (team.getLeaderID().equals(ParseUser.getCurrentUser().getObjectId())) {
+            // captain menu
+            getMenuInflater().inflate(R.menu.team_info_captain, menu);
+        } else {
+            // member menu
+            getMenuInflater().inflate(R.menu.team_info, menu);
+        }
         return true;
     }
 
@@ -128,7 +138,46 @@ public class TeamInfoActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (item.getItemId() == R.id.manage_requests) {
+            Intent intent = new Intent(this, RequestManagementActivity.class);
+            intent.putExtra("teamId", team.getObjectId());
+            startActivityForResult(intent, MANAGE_REQUEST_REQUEST_CODE);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == MANAGE_REQUEST_REQUEST_CODE) {
+            // add new member info into the screen
+
+            // get updated members list
+            ParseQuery<Team> query = ParseQuery.getQuery("Team");
+            try {
+                team = query.get(getIntent().getStringExtra("teamID"));
+            } catch (ParseException e) {
+            }
+            List<String> newMembersIDs = team.getMembers();
+            for (int i = membersIDs.size(); i < newMembersIDs.size(); ++i) {
+                ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                // try to load from the cache; but if that fails, load results from the network
+                userQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                try {
+                    members.add(userQuery.get(newMembersIDs.get(i)));
+                } catch (ParseException e) {
+                    exceptionHandler(e);
+                    finish();
+                }
+            }
+
+            int startIndex = membersIDs.size();
+            membersIDs = newMembersIDs;
+            // show member avartar and name
+            for (int index = startIndex; index < newMembersIDs.size(); ++index) {
+                linearLayout.addView(addMemberInfo(index));
+            }
+        }
     }
 
     class LeaveListener implements View.OnClickListener {

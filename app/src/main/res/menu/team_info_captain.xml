@@ -2,4 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.qianchen.sportsbuddy.TeamInfoActivity" >
 
+    <item
+        android:id="@+id/manage_requests"
+        android:title="@string/menu_manage_requests"
+        android:showAsAction="always"
+        />
+
 </menu>

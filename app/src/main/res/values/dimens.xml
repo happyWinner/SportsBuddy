@@ -25,6 +25,8 @@
     <dimen name="team_info_padding_top">30dp</dimen>
     <dimen name="team_info_emblem_height">200dp</dimen>
     <dimen name="team_info_emblem_width">200dp</dimen>
+    <dimen name="team_info_avartar_height">130dp</dimen>
+    <dimen name="team_info_avartar_width">130dp</dimen>
     <dimen name="team_info_team_name_text_size">50sp</dimen>
     <dimen name="team_info_member_padding_right">50dp</dimen>
     <dimen name="team_info_member_padding_top">10dp</dimen>

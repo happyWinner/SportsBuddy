@@ -3,7 +3,6 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +17,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DiscoverTeamActivity extends Activity {
 
     private SearchView searchView;
@@ -34,6 +30,9 @@ public class DiscoverTeamActivity extends Activity {
 
         // register Team as the subclass of ParseObject
         ParseObject.registerSubclass(Team.class);
+
+        // register Request as the subclass of ParseObject
+        ParseObject.registerSubclass(Request.class);
 
         // authenticates this client to Parse
         Parse.initialize(this, getString(R.string.application_id), getString(R.string.client_key));
@@ -82,25 +81,34 @@ public class DiscoverTeamActivity extends Activity {
                 final Team finalTeam = team;
                 builder.setPositiveButton("join", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
                         ParseUser user = ParseUser.getCurrentUser();
-                        finalTeam.addMember(user.getObjectId());
-                        finalTeam.saveInBackground();
-                        List<String> teamsJoined = user.getList("teamsJoined");
-                        if (teamsJoined == null) {
-                            teamsJoined = new ArrayList<String>();
-                        }
-                        teamsJoined.add(finalTeam.getObjectId());
-                        user.put("teamsJoined", teamsJoined);
-                        user.saveInBackground();
-                        try {
-                            user.fetch();
-                        } catch (ParseException e1) {
-                        }
-                        Intent intent = new Intent();
-                        intent.putExtra("teamId", finalTeam.getObjectId());
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        Request request = new Request();
+                        request.setUserName(user.getUsername());
+                        request.setUserID(user.getObjectId());
+                        request.setTeamID(finalTeam.getObjectId());
+                        request.saveInBackground();
+                        Toast.makeText(getApplicationContext(), "Request Sent", Toast.LENGTH_SHORT).show();
+
+
+//                        // User clicked OK button
+//                        ParseUser user = ParseUser.getCurrentUser();
+//                        finalTeam.addMember(user.getObjectId());
+//                        finalTeam.saveInBackground();
+//                        List<String> teamsJoined = user.getList("teamsJoined");
+//                        if (teamsJoined == null) {
+//                            teamsJoined = new ArrayList<String>();
+//                        }
+//                        teamsJoined.add(finalTeam.getObjectId());
+//                        user.put("teamsJoined", teamsJoined);
+//                        user.saveInBackground();
+//                        try {
+//                            user.fetch();
+//                        } catch (ParseException e1) {
+//                        }
+//                        Intent intent = new Intent();
+//                        intent.putExtra("teamId", finalTeam.getObjectId());
+//                        setResult(RESULT_OK, intent);
+//                        finish();
                     }
                 });
                 builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/black"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <com.parse.ParseImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/image_user_avartar"
+        android:gravity="left"
+        android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/text_user_name"
+        android:gravity="center_vertical|left" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/button_approve"
+        android:id="@+id/button_approve"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/green"
+        android:gravity="center_vertical"
+        android:paddingRight="@dimen/activity_horizontal_margin" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/button_ignore"
+        android:id="@+id/button_ignore"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/red"
+        android:gravity="center_vertical" />
+
+</LinearLayout>

@@ -20,9 +20,12 @@ import android.view.ViewGroup;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener,
@@ -55,6 +58,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // register Team as the subclass of ParseObject
+        ParseObject.registerSubclass(Team.class);
+
+        // register ApprovedRequest as the subclass of ParseObject
+        ParseObject.registerSubclass(ApprovedRequest.class);
+
         // authenticates this client to Parse
         Parse.initialize(this, getString(R.string.application_id), getString(R.string.client_key));
 
@@ -84,8 +93,24 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                 }
             });
-        }
 
+            // process user's approved requests
+            ParseQuery<ApprovedRequest> approvedRequestQuery = ParseQuery.getQuery("ApprovedRequest");
+            approvedRequestQuery.whereEqualTo("userID", currentUser.getObjectId());
+            try {
+                List<String> teamsJoined = currentUser.getList("teamsJoined");
+                if (teamsJoined == null) {
+                    teamsJoined = new ArrayList<String>();
+                }
+                List<ApprovedRequest> approvedRequests = approvedRequestQuery.find();
+                for (ApprovedRequest approvedRequest : approvedRequests) {
+                    teamsJoined.add(approvedRequest.getTeamID());
+                }
+                currentUser.put("teamsJoined", teamsJoined);
+                currentUser.saveInBackground();
+            } catch (ParseException e) {
+            }
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
