@@ -17,4 +17,19 @@
     <!-- Dimens related to new team activity -->
     <dimen name="text_size">25sp</dimen>
     <dimen name="new_team_padding_top">30dp</dimen>
+
+    <!-- Dimens related to team info activity -->
+    <dimen name="team_info_table_padding_left">5dp</dimen>
+    <dimen name="team_info_table_padding_right">5dp</dimen>
+    <dimen name="team_info_table_row_padding_top">30dp</dimen>
+    <dimen name="team_info_padding_top">30dp</dimen>
+    <dimen name="team_info_emblem_height">200dp</dimen>
+    <dimen name="team_info_emblem_width">200dp</dimen>
+    <dimen name="team_info_team_name_text_size">50sp</dimen>
+    <dimen name="team_info_member_padding_right">50dp</dimen>
+    <dimen name="team_info_member_padding_top">10dp</dimen>
+    <dimen name="team_info_member_padding_bottom">10dp</dimen>
+    <dimen name="team_info_member_avartar_height">100dp</dimen>
+    <dimen name="team_info_member_avartar_width">100dp</dimen>
+
 </resources>

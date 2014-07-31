@@ -34,10 +34,13 @@ import java.util.List;
  */
 public class TeamFragment extends Fragment {
 
-    public static final int REQUEST_CODE = 28;
+    public static final int CREATE_TEAM_REQUEST_CODE = 28;
+    public static final int DISCOVER_TEAM_REQUEST_CODE = 428;
+    public static final int TEAM_INFO_REQUEST_CODE = 117;
     private OnFragmentInteractionListener mListener;
     private List<Team> teamList;
     private TeamAdapter teamAdapter;
+    private ListView listView;
 
     public static TeamFragment newInstance(String param1, String param2) {
         TeamFragment fragment = new TeamFragment();
@@ -84,14 +87,14 @@ public class TeamFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         // get a reference to the ListView, and attach this adapter to it
-        ListView listView = (ListView) view.findViewById(R.id.listview_team);
+        listView = (ListView) view.findViewById(R.id.listview_team);
         listView.setAdapter(teamAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), TeamInfoActivity.class);
                 intent.putExtra("teamID", teamList.get(position).getObjectId());
-                startActivity(intent);
+                startActivityForResult(intent, TEAM_INFO_REQUEST_CODE);
             }
         });
         return view;
@@ -126,7 +129,11 @@ public class TeamFragment extends Fragment {
         // todo
         switch (item.getItemId()) {
             case R.id.team_new:
-                startActivityForResult(new Intent(getActivity(), NewTeamActivity.class), REQUEST_CODE);
+                startActivityForResult(new Intent(getActivity(), NewTeamActivity.class), CREATE_TEAM_REQUEST_CODE);
+                break;
+
+            case R.id.team_discover:
+                startActivityForResult(new Intent(getActivity(), DiscoverTeamActivity.class), DISCOVER_TEAM_REQUEST_CODE);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -135,7 +142,7 @@ public class TeamFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
+        if (requestCode == CREATE_TEAM_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
             String teamId = data.getStringExtra("teamId");
             ParseQuery<Team> query = ParseQuery.getQuery("Team");
             // try to load from the cache; but if that fails, load results from the network
@@ -145,6 +152,11 @@ public class TeamFragment extends Fragment {
             } catch (ParseException e) {
                 exceptionHandler(e);
             }
+        }
+        if (requestCode == TEAM_INFO_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
+            teamList = ParseUser.getCurrentUser().getList("teamsJoined");
+            teamAdapter = new TeamAdapter(getActivity(), teamList);
+            listView.setAdapter(teamAdapter);
         }
         teamAdapter.notifyDataSetChanged();
     }

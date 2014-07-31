@@ -64,6 +64,10 @@ public class Team extends ParseObject {
         put("members", members);
     }
 
+    public void setMembers(List<String> members) {
+        put("members", members);
+    }
+
     public List<String> getMembers() {
         return getList("members");
     }

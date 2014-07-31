@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:paddingRight="@dimen/team_info_member_padding_right"
+    android:orientation="vertical">
+
+    <com.parse.ParseImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:id="@+id/team_info_member_avartar"/>
+    <TextView
+        android:paddingTop="@dimen/team_info_member_padding_top"
+        android:paddingBottom="@dimen/team_info_member_padding_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/team_info_member_name"
+        android:textSize="@dimen/text_size"/>
+
+</LinearLayout>
+

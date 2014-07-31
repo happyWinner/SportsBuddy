@@ -84,7 +84,7 @@
     <string name="button_join">Join</string>
     <string name="event_join_successfully">You have successfully joined the event!</string>
 
-    <!-- Strings related to new team window -->
+    <!-- Strings related to new team activity -->
     <string name="label_team_name">Team Name</string>
     <string name="label_sports_type">Sports Type</string>
     <string name="label_upload_emblem">Upload Emblem</string>
@@ -95,6 +95,22 @@
     <string name="error_empty_sports_type">Please select a sports type!</string>
     <string name="error_team_name_taken">The team name is already taken</string>
     <string name="team_created_successfully">Your team is created successfully!</string>
-    <string name="title_activity_discover_team">DiscoverTeamActivity</string>
+
+    <!-- Strings related to discover team activity -->
+    <string name="hint_search_view">Find teams to join...</string>
+    <string-array name="discover_team_array">
+        <item>Soccer</item>
+        <item>Basketball</item>
+        <item>Tennis</item>
+        <item>Pool</item>
+        <item>Volleyball</item>
+        <item>Squash</item>
+        <item>Cycling</item>
+        <item>All</item>
+    </string-array>
+
+    <!-- Strings related to team info activity -->
+    <string name="button_leave">Leave The Team</string>
+    <string name="successfully_leave_team">Successfully leave the team!</string>
 
 </resources>

@@ -10,7 +10,7 @@
         />
 
     <item
-        android:id="@+id/team_search"
+        android:id="@+id/team_discover"
         android:icon="@drawable/ic_action_team_search"
         android:title=""
         android:showAsAction="always"

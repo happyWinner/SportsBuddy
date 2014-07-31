@@ -6,6 +6,70 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.qianchen.sportsbuddy.TeamInfoActivity">
+    tools:context=".MyActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/linear_layout">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/team_info_padding_top"
+            android:paddingLeft="@dimen/team_info_table_padding_left"
+            android:paddingRight="@dimen/team_info_table_padding_right">
+
+            <com.parse.ParseImageView
+                android:layout_width="@dimen/team_info_emblem_width"
+                android:layout_height="@dimen/team_info_emblem_height"
+                android:layout_gravity="center"
+                android:id="@+id/team_info_emblem" />
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:textStyle="bold"
+                android:gravity="center_horizontal|top"
+                android:id="@+id/team_info_team_name"
+                android:textSize="@dimen/team_info_team_name_text_size"/>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingTop="@dimen/team_info_table_row_padding_top">
+            </TableRow>
+            <TableRow>
+                <HorizontalScrollView
+                    android:id="@+id/members"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/team_info_linear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </TableRow>
+        </TableLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_leave"
+            android:id="@+id/button_leave"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>
