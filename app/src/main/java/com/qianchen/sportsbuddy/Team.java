@@ -59,8 +59,8 @@ public class Team extends ParseObject {
         List<String> members = getList("members");
         if (members == null) {
             members = new ArrayList<String>();
-            members.add(member);
         }
+        members.add(member);
         put("members", members);
     }
 

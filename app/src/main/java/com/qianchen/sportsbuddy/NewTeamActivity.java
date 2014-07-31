@@ -286,8 +286,8 @@ public class NewTeamActivity extends Activity {
 
                 Toast.makeText(getApplicationContext(), getString(R.string.team_created_successfully), Toast.LENGTH_SHORT).show();
 
-                setResult(RESULT_OK, intent);
                 intent.putExtra("teamId", team.getObjectId());
+                setResult(RESULT_OK, intent);
             } else {
                 switch (e.getCode()) {
                     case ParseException.INTERNAL_SERVER_ERROR:

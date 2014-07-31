@@ -142,7 +142,7 @@ public class TeamFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CREATE_TEAM_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
+        if ((requestCode == CREATE_TEAM_REQUEST_CODE || requestCode == DISCOVER_TEAM_REQUEST_CODE) && resultCode == getActivity().RESULT_OK) {
             String teamId = data.getStringExtra("teamId");
             ParseQuery<Team> query = ParseQuery.getQuery("Team");
             // try to load from the cache; but if that fails, load results from the network
@@ -154,9 +154,14 @@ public class TeamFragment extends Fragment {
             }
         }
         if (requestCode == TEAM_INFO_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
-            teamList = ParseUser.getCurrentUser().getList("teamsJoined");
-            teamAdapter = new TeamAdapter(getActivity(), teamList);
-            listView.setAdapter(teamAdapter);
+            // delete the team the user just left
+            String teamId = data.getStringExtra("teamId");
+            for (int i = 0; i < teamList.size(); ++i) {
+                if (teamList.get(i).getObjectId().equals(teamId)) {
+                    teamList.remove(i);
+                    break;
+                }
+            }
         }
         teamAdapter.notifyDataSetChanged();
     }

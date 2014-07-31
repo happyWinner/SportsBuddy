@@ -108,6 +108,7 @@
         <item>Cycling</item>
         <item>All</item>
     </string-array>
+    <string name="error_team_not_found">No such team!</string>
 
     <!-- Strings related to team info activity -->
     <string name="button_leave">Leave The Team</string>

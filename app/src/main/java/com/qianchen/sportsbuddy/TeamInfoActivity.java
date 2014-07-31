@@ -2,6 +2,7 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -158,7 +159,9 @@ public class TeamInfoActivity extends Activity {
             team.saveInBackground();
 
             Toast.makeText(getApplicationContext(), getString(R.string.successfully_leave_team), Toast.LENGTH_SHORT).show();
-            setResult(RESULT_OK);
+            Intent intent = new Intent();
+            intent.putExtra("teamId", team.getObjectId());
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
