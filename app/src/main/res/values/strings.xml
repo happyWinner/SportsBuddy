@@ -109,6 +109,7 @@
         <item>All</item>
     </string-array>
     <string name="error_team_not_found">No such team!</string>
+    <string name="error_team_already_joined">You have already joined this team!</string>
 
     <!-- Strings related to team info activity -->
     <string name="button_leave">Leave The Team</string>

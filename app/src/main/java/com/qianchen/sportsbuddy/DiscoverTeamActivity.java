@@ -65,6 +65,10 @@ public class DiscoverTeamActivity extends Activity {
             Team team = null;
             try {
                 team = parseQuery.getFirst();
+                if (ParseUser.getCurrentUser().getList("teamsJoined").contains(team.getObjectId())) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_team_already_joined), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
             } catch (ParseException e) {
                 exceptionHandler(e, getString(R.string.error_team_not_found));
                 return false;
