@@ -3,5 +3,8 @@
     <color name="black">#E0000000</color>
     <color name="red">#E0FF0000</color>
     <color name="green">#E000C000</color>
+    <color name="blue">#E00000FF</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_holo_light">#FFF3F3F3</color>
+    <color name="textview_boarder">#FF4FA5D5</color>
 </resources>

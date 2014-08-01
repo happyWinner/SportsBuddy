@@ -1,0 +1,12 @@
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/team_discover_text_view_padding_vertical"
+    android:paddingBottom="@dimen/team_discover_text_view_padding_vertical"
+    android:gravity="center"
+    android:background="@drawable/grid_textview_unselected"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="@color/textview_boarder"
+    android:id="@+id/grid_item_team_type">
+ </TextView>

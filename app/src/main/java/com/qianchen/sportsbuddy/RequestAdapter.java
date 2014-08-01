@@ -58,16 +58,16 @@ public class RequestAdapter extends BaseAdapter {
             ((Button) view.findViewById(R.id.button_ignore)).setOnClickListener(new IgnoreListener(position));
             ((Button) view.findViewById(R.id.button_approve)).setOnClickListener(new ApproveListener(position));
             ((TextView) view.findViewById(R.id.text_user_name)).setText(request.getUserName());
-            ParseImageView imageView = (ParseImageView) view.findViewById(R.id.image_user_avartar);
+            ParseImageView imageView = (ParseImageView) view.findViewById(R.id.image_user_avatar);
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             ParseUser user;
             try {
                 user = query.get(request.getUserID());
             } catch (ParseException e) {
-                // todo user default avartar
+                // todo user default avatar
                 return view;
             }
-            imageView.setParseFile(user.getParseFile("avartar"));
+            imageView.setParseFile(user.getParseFile("avatar"));
             imageView.loadInBackground();
         }
 

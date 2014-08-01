@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <com.parse.ParseImageView
-        android:layout_width="@dimen/team_info_avartar_width"
-        android:layout_height="@dimen/team_info_avartar_height"
+        android:layout_width="@dimen/team_info_avatar_width"
+        android:layout_height="@dimen/team_info_avatar_height"
         android:gravity="center"
-        android:id="@+id/team_info_member_avartar"/>
+        android:id="@+id/team_info_member_avatar"/>
     <TextView
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingTop="@dimen/team_info_member_padding_top"

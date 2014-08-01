@@ -8,7 +8,7 @@
     <com.parse.ParseImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/image_user_avartar"
+        android:id="@+id/image_user_avatar"
         android:gravity="left"
         android:paddingRight="@dimen/activity_horizontal_margin"/>
 

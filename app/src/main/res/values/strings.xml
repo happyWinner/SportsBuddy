@@ -110,18 +110,23 @@
         <item>All</item>
     </string-array>
 
+    <string name="dialog_title">Confirm Join Request</string>
+    <string name="dialog_message">Do you want to join this team? Team leader will be notified.</string>
+    <string name="dialog_button_confirm">Confirm</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="request_sent">Request sent successfully!</string>
     <string name="error_team_not_found">No such team!</string>
     <string name="error_team_already_joined">You have already joined this team!</string>
 
     <!-- Strings related to team info activity -->
-    <string name="button_leave">Leave The Team</string>
+    <string name="button_leave">Leave Team</string>
     <string name="successfully_leave_team">Successfully leave the team!</string>
     <string name="menu_manage_requests">Manage Requests</string>
     <string name="menu_manage_requests_done">Done</string>
 
-    <!-- Strings related to request management activity-->
+    <!-- Strings related to request management activity -->
     <string name="button_ignore">Ignore</string>
     <string name="button_approve">Approve</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

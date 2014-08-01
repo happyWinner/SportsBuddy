@@ -33,7 +33,7 @@ public class TeamInfoActivity extends Activity {
     private ParseImageView teamEmblem;
     private TextView teamName;
     private TextView memberName;
-    private ParseImageView memberAvartar;
+    private ParseImageView memberAvatar;
     private LinearLayout linearLayout;
     private List<String> membersIDs;
 
@@ -91,7 +91,7 @@ public class TeamInfoActivity extends Activity {
             }
         }
 
-        // show member avartar and name
+        // show member avatar and name
         for (int index = 0; index < members.size(); ++index) {
             linearLayout.addView(addMemberInfo(index));
         }
@@ -102,10 +102,10 @@ public class TeamInfoActivity extends Activity {
         inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_member, null);
 
-        // show member avartar
-        memberAvartar = (ParseImageView) layout.findViewById(R.id.team_info_member_avartar);
-        memberAvartar.setParseFile(members.get(index).getParseFile("avartar"));
-        memberAvartar.loadInBackground();
+        // show member avatar
+        memberAvatar = (ParseImageView) layout.findViewById(R.id.team_info_member_avatar);
+        memberAvatar.setParseFile(members.get(index).getParseFile("avatar"));
+        memberAvatar.loadInBackground();
 
         // show member name
         memberName = (TextView) layout.findViewById(R.id.team_info_member_name);
@@ -173,7 +173,7 @@ public class TeamInfoActivity extends Activity {
 
             int startIndex = membersIDs.size();
             membersIDs = newMembersIDs;
-            // show member avartar and name
+            // show member avatar and name
             for (int index = startIndex; index < newMembersIDs.size(); ++index) {
                 linearLayout.addView(addMemberInfo(index));
             }
