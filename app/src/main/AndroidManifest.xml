@@ -65,7 +65,8 @@
         </activity>
         <activity
             android:name=".NewTeamActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".DiscoverTeamActivity"
@@ -85,14 +86,16 @@
         <activity
             android:name=".ViewPostActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qianchen.sportsbuddy.MainActivity" />
         </activity>
         <activity
             android:name=".AddReplyActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName=".ViewPostActivity" >
         </activity>
     </application>
 
