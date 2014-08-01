@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -58,6 +59,8 @@ public class DiscussionFragment extends Fragment {
         // authenticates this client to Parse
         Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
 
+        setHasOptionsMenu(true);
+
         ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
         // try to load from the cache; but if that fails, load results from the network
         postQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
@@ -99,6 +102,15 @@ public class DiscussionFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.menu.new_discussion) {
+            //todo update discussion list!
+            startActivity(new Intent(getActivity(), NewDiscussionActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

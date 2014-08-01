@@ -126,7 +126,6 @@ public class TeamFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // todo
         switch (item.getItemId()) {
             case R.id.team_new:
                 startActivityForResult(new Intent(getActivity(), NewTeamActivity.class), CREATE_TEAM_REQUEST_CODE);

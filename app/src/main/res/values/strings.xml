@@ -134,4 +134,10 @@
     <string name="hint_reply">Add your reply here...</string>
     <string name="error_empty_reply">Please input your reply!</string>
     <string name="reply_successfully">Successfully replied!</string>
+
+    <!-- Strings related to new discussion activity -->
+    <string name="button_post">Post</string>
+    <string name="hint_post_title">Discussion Title</string>
+    <string name="hint_post_content">What would you like to discuss today?</string>
+
 </resources>

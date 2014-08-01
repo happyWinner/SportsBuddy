@@ -101,17 +101,22 @@ public class AddReplyActivity extends Activity {
             reply.setUserName(ParseUser.getCurrentUser().getUsername());
             reply.setUserID(ParseUser.getCurrentUser().getObjectId());
             reply.setReplyMessage(replyMessage);
-            reply.saveInBackground();
+            try {
+                reply.save();
+            } catch (ParseException e) {
+                exceptionHandler(e);
+                finish();
+            }
 
             // update post info
             ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
-            // try to load from the cache; but if that fails, load results from the network
-            postQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
             try {
                 DiscussionPost post = postQuery.get(postID);
                 post.addReply(reply.getObjectId());
                 post.saveInBackground();
             } catch (ParseException e) {
+                exceptionHandler(e);
+                finish();
             }
 
             Toast.makeText(getApplicationContext(), getString(R.string.reply_successfully), Toast.LENGTH_SHORT).show();
@@ -134,5 +139,25 @@ public class AddReplyActivity extends Activity {
     private void hideSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    private void exceptionHandler(ParseException e) {
+        switch (e.getCode()) {
+            case ParseException.INTERNAL_SERVER_ERROR:
+                Toast.makeText(getApplicationContext(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.CONNECTION_FAILED:
+                Toast.makeText(getApplicationContext(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.TIMEOUT:
+                Toast.makeText(getApplicationContext(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                Toast.makeText(getApplicationContext(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }
