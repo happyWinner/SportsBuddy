@@ -18,12 +18,12 @@ public class DiscussionPost extends ParseObject {
         return getString("author");
     }
 
-    public void setCreatedDate(Date date) {
-        put("createdAt", date);
-    }
+//    public void setCreatedDate(Date date) {
+//        put("createdAt", date);
+//    }
 
     public Date getCreatedDate() {
-        return getDate("createdAt");
+        return getCreatedAt();
     }
 
 //    public void setAvatar(ParseFile emblem) {

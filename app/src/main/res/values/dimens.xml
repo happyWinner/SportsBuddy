@@ -37,4 +37,10 @@
     <!--Dimens related to team discover activity -->
     <dimen name="team_discover_text_view_padding_vertical">5dp</dimen>
 
+    <!-- Dimens related to discussion fragment -->
+    <dimen name="discussion_avatar_height">100dp</dimen>
+    <dimen name="discussion_avatar_width">100dp</dimen>
+    <dimen name="content_size">15dp</dimen>
+    <dimen name="content_show_size">37dp</dimen>
+
 </resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/padding_vertical"
+    android:paddingBottom="@dimen/padding_vertical"
+    android:paddingRight="@dimen/padding_horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/left"
+        android:layout_weight="1">
+
+        <com.parse.ParseImageView
+            android:layout_width="@dimen/discussion_avatar_height"
+            android:layout_height="@dimen/discussion_avatar_height"
+            android:id="@+id/discussion_avatar"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/discussion_name"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:layout_gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/discussion_date"
+            android:layout_weight="2"
+            android:layout_gravity="right|top"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="left|top"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/discussion_topic"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="@dimen/content_size"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="left|top"
+            android:paddingTop="@dimen/padding_vertical"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/discussion_content" />
+    </LinearLayout>
+
+</LinearLayout>

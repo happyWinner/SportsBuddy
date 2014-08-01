@@ -29,7 +29,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener,
-        EventFragment.OnFragmentInteractionListener, TeamFragment.OnFragmentInteractionListener {
+        EventFragment.OnFragmentInteractionListener, TeamFragment.OnFragmentInteractionListener,
+        DiscussionFragment.OnFragmentInteractionListener {
 
     /**
      * Total number of pages.
@@ -288,6 +289,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 break;
 
                 case 3:
+                    fragment = new DiscussionFragment();
+                    break;
+
                 case 4:
                 default:
                     fragment = new PlaceholderFragment();
