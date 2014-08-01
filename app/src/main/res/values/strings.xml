@@ -129,4 +129,9 @@
     <string name="button_approve">Approve</string>
     <string name="button_add_reply">Add Reply</string>
 
+    <!-- Strings related to add reply activity -->
+    <string name="button_reply">Reply</string>
+    <string name="hint_reply">Add your reply here...</string>
+    <string name="error_empty_reply">Please input your reply!</string>
+    <string name="reply_successfully">Successfully replied!</string>
 </resources>

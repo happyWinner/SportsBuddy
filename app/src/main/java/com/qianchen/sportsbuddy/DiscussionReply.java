@@ -25,6 +25,14 @@ public class DiscussionReply extends ParseObject {
         return getString("userName");
     }
 
+    public void setUserID(String userID) {
+        put("userID", userID);
+    }
+
+    public String getUserID() {
+        return getString("userID");
+    }
+
     public void setReplyMessage(String replyMessage) {
         put("replyMessage", replyMessage);
     }

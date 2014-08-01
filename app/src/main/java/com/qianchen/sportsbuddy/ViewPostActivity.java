@@ -1,9 +1,12 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import java.util.List;
 
 public class ViewPostActivity extends Activity {
 
+    public static final int ADD_REPLY_REQUEST_CODE = 60;
     private ParseImageView postAvatar;
     private TextView postAuthor;
     private TextView postTitle;
@@ -29,6 +33,7 @@ public class ViewPostActivity extends Activity {
     private ListView replyListView;
     private List<DiscussionReply> replyList;
     private ReplyAdapter replyAdapter;
+    private Button addReplyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,17 @@ public class ViewPostActivity extends Activity {
         postTitle = (TextView) findViewById(R.id.post_title);
         postContent = (TextView) findViewById(R.id.post_content);
         replyListView = (ListView) findViewById(R.id.listview_reply);
+        addReplyButton = (Button) findViewById(R.id.button_add_reply);
+
+        // set "Add Reply" button listener
+        addReplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddReplyActivity.class);
+                intent.putExtra("postID", post.getObjectId());
+                startActivityForResult(intent, ADD_REPLY_REQUEST_CODE);
+            }
+        });
 
         ParseQuery postQuery = ParseQuery.getQuery("DiscussionPost");
         try {
@@ -59,7 +75,7 @@ public class ViewPostActivity extends Activity {
             finish();
         }
 
-        postAvatar.setParseFile(getAvatarByName(post.getAuthor()));
+        postAvatar.setParseFile(getAvatarByID(post.getAuthorID()));
         postAvatar.loadInBackground();
         postAuthor.setText(post.getAuthor());
         postTitle.setText(post.getTitle());
@@ -84,6 +100,22 @@ public class ViewPostActivity extends Activity {
         replyListView.setAdapter(replyAdapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_REPLY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String replyID = data.getStringExtra("replyID");
+            ParseQuery<DiscussionReply> query = ParseQuery.getQuery("DiscussionReply");
+            // try to load from the cache; but if that fails, load results from the network
+            query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+            try {
+                replyList.add(0, query.get(replyID));
+            } catch (ParseException e) {
+                exceptionHandler(e);
+            }
+        }
+        replyAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,11 +132,10 @@ public class ViewPostActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private ParseFile getAvatarByName(String name) {
-        ParseQuery query = ParseUser.getQuery();
-        query.whereEqualTo("username", name);
+    private ParseFile getAvatarByID(String ID) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         try {
-            ParseUser user = (ParseUser) query.getFirst();
+            ParseUser user = query.get(ID);
             return user.getParseFile("avatar");
         } catch (ParseException e) {
             return null;

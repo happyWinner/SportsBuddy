@@ -69,10 +69,9 @@ public class DiscussionAdapter extends BaseAdapter {
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
         // try to load from the cache; but if that fails, load results from the network
         userQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        userQuery.whereEqualTo("username", discussion.getAuthor());
         ParseUser user = null;
         try {
-            user = userQuery.getFirst();
+            user = userQuery.get(discussion.getAuthorID());
         } catch (ParseException e) {
             // todo
         }

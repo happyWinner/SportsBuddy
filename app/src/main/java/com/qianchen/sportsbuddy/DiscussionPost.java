@@ -20,6 +20,14 @@ public class DiscussionPost extends ParseObject {
         return getString("author");
     }
 
+    public void setAuthorID(String authorID) {
+        put("authorID", authorID);
+    }
+
+    public String getAuthorID() {
+        return getString("authorID");
+    }
+
     public void setTitle(String title) {
         put("title", title);
     }
