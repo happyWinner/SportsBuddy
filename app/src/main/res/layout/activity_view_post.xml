@@ -1,0 +1,74 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="@dimen/padding_vertical"
+    android:paddingBottom="@dimen/padding_vertical"
+    android:paddingLeft="@dimen/padding_horizontal"
+    android:paddingRight="@dimen/padding_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/left"
+            android:layout_weight="1">
+
+            <com.parse.ParseImageView
+                android:layout_width="@dimen/discussion_avatar_height"
+                android:layout_height="@dimen/discussion_avatar_height"
+                android:id="@+id/post_avatar"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/post_author"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/post_title"
+            android:textSize="@dimen/post_title_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/post_content_horizontal_padding"
+        android:paddingRight="@dimen/post_content_horizontal_padding"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:id="@+id/post_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <Button
+        android:layout_marginTop="@dimen/button_margin_vertical"
+        android:layout_marginBottom="@dimen/button_margin_vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_add_reply"
+        android:id="@+id/button_add_reply" />
+
+    <ListView
+        android:id="@+id/listview_reply"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

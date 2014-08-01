@@ -127,5 +127,6 @@
     <!-- Strings related to request management activity -->
     <string name="button_ignore">Ignore</string>
     <string name="button_approve">Approve</string>
+    <string name="button_add_reply">Add Reply</string>
 
 </resources>

@@ -2,18 +2,21 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -28,6 +31,7 @@ import java.util.List;
  */
 public class DiscussionFragment extends Fragment {
 
+    public static final int REQUEST_CODE = 963;
     private ListView listView;
     private DiscussionAdapter discussionAdapter;
     private List<DiscussionPost> discussionPostList;
@@ -55,24 +59,45 @@ public class DiscussionFragment extends Fragment {
         Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
 
         ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
+        // try to load from the cache; but if that fails, load results from the network
+        postQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        postQuery.addDescendingOrder("createdAt");
         try {
             discussionPostList = postQuery.find();
         } catch (com.parse.ParseException e) {
-            // todo
-        }
-        Collections.reverse(discussionPostList);
-        discussionAdapter = new DiscussionAdapter(getActivity(), discussionPostList);
+            switch (e.getCode()) {
+                case ParseException.INTERNAL_SERVER_ERROR:
+                    Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                    break;
 
+                case ParseException.CONNECTION_FAILED:
+                    Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                    break;
+
+                case ParseException.TIMEOUT:
+                    Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                    break;
+            }
+            return;
+        }
+        discussionAdapter = new DiscussionAdapter(getActivity(), discussionPostList);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_discussion2, container, false);
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discussion, container, false);
         listView = (ListView) view.findViewById(R.id.listview_discussion);
         listView.setAdapter(discussionAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), ViewPostActivity.class);
+                intent.putExtra("postID", discussionPostList.get(position).getObjectId());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -28,7 +30,13 @@ public class DiscussionAdapter extends BaseAdapter {
     public DiscussionAdapter(Context context, List<DiscussionPost> discussion){
         this.context = context;
         this.discussionList = discussion;
-        simpleDateFormat = new SimpleDateFormat("MMM dd HH:mm");
+        simpleDateFormat = new SimpleDateFormat("MMM dd");
+
+        // register DiscussionPost as the subclass of ParseObject
+        ParseObject.registerSubclass(DiscussionPost.class);
+
+        // authenticates this client to Parse
+        Parse.initialize(context, context.getString(R.string.application_id), context.getString(R.string.client_key));
     }
 
     @Override
@@ -55,10 +63,12 @@ public class DiscussionAdapter extends BaseAdapter {
         }
         DiscussionPost discussion = discussionList.get(position);
         ((TextView)view.findViewById(R.id.discussion_name)).setText(discussion.getAuthor());
-        ((TextView) view.findViewById(R.id.discussion_date)).setText(simpleDateFormat.format(discussion.getCreatedDate()));
+        ((TextView) view.findViewById(R.id.discussion_date)).setText(simpleDateFormat.format(discussion.getCreatedAt()));
         ((TextView)view.findViewById(R.id.discussion_topic)).setText(discussion.getTitle());
         ((TextView)view.findViewById(R.id.discussion_content)).setText(discussion.getContent());
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+        // try to load from the cache; but if that fails, load results from the network
+        userQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
         userQuery.whereEqualTo("username", discussion.getAuthor());
         ParseUser user = null;
         try {
