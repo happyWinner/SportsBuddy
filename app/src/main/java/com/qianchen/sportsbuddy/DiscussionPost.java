@@ -53,6 +53,10 @@ public class DiscussionPost extends ParseObject {
         put("replies", replies);
     }
 
+    public void setReplies(List<String> replies) {
+        put("replies", replies);
+    }
+
     public List<String> getReplies() {
         return getList("replies");
     }

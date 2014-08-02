@@ -127,7 +127,6 @@ public class AddReplyActivity extends Activity {
         }
     }
 
-
     class TouchListener implements View.OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             // hide the soft keyboard when the background is touched

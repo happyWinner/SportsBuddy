@@ -139,5 +139,8 @@
     <string name="button_post">Post</string>
     <string name="hint_post_title">Discussion Title</string>
     <string name="hint_post_content">What would you like to discuss today?</string>
+    <string name="error_empty_title">Please input title!</string>
+    <string name="error_empty_content">Please input content!</string>
+    <string name="successfully_post">Successfully posted!</string>
 
 </resources>

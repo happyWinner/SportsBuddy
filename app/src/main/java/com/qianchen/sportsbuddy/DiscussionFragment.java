@@ -33,6 +33,7 @@ import java.util.List;
 public class DiscussionFragment extends Fragment {
 
     public static final int REQUEST_CODE = 963;
+    public static final int NEW_DISCUSSION_REQUEST_CODE1 = 412;
     private ListView listView;
     private DiscussionAdapter discussionAdapter;
     private List<DiscussionPost> discussionPostList;
@@ -106,11 +107,25 @@ public class DiscussionFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.menu.new_discussion) {
-            //todo update discussion list!
-            startActivity(new Intent(getActivity(), NewDiscussionActivity.class));
+        if (item.getItemId() == R.id.discussion_new) {
+            startActivityForResult(new Intent(getActivity(), NewDiscussionActivity.class), NEW_DISCUSSION_REQUEST_CODE1);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_DISCUSSION_REQUEST_CODE1 && resultCode == getActivity().RESULT_OK) {
+            //todo update discussion list!
+            ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
+            try {
+                discussionPostList.add(0, postQuery.get(data.getStringExtra("postID")));
+            } catch (ParseException e) {
+                exceptionHandler(e);
+            }
+        }
+        discussionAdapter.notifyDataSetChanged();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -150,5 +165,25 @@ public class DiscussionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private void exceptionHandler(ParseException e) {
+        switch (e.getCode()) {
+            case ParseException.INTERNAL_SERVER_ERROR:
+                Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.CONNECTION_FAILED:
+                Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                break;
+
+            case ParseException.TIMEOUT:
+                Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                Toast.makeText(getActivity(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }
