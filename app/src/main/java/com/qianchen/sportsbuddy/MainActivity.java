@@ -106,6 +106,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 List<ApprovedRequest> approvedRequests = approvedRequestQuery.find();
                 for (ApprovedRequest approvedRequest : approvedRequests) {
                     teamsJoined.add(approvedRequest.getTeamID());
+                    approvedRequest.deleteInBackground();
                 }
                 currentUser.put("teamsJoined", teamsJoined);
                 currentUser.saveInBackground();
@@ -314,6 +315,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 }

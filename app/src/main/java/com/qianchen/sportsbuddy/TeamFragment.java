@@ -158,6 +158,11 @@ public class TeamFragment extends Fragment {
             for (int i = 0; i < teamList.size(); ++i) {
                 if (teamList.get(i).getObjectId().equals(teamId)) {
                     teamList.remove(i);
+                    ParseQuery<Team> teamQuery = ParseQuery.getQuery("Team");
+                    try {
+                        EventFragment.teamsJoined.remove(teamQuery.get(teamId).getName());
+                    } catch (ParseException e) {
+                    }
                     break;
                 }
             }

@@ -68,6 +68,7 @@ public class EventFragment extends Fragment {
     private CameraPosition lastPosition;
     private HashMap<Marker, Event> markerEventHashMap;
     private HashSet<String> eventIDHashSet;
+    public static HashSet<String> teamsJoined;
     private SimpleDateFormat simpleDateFormat;
 
     public static EventFragment newInstance(String param1, String param2) {
@@ -85,6 +86,9 @@ public class EventFragment extends Fragment {
 
         // register Event as the subclass of ParseObject
         ParseObject.registerSubclass(Event.class);
+
+        // register Team as the subclass of ParseObject
+        ParseObject.registerSubclass(Team.class);
 
         // authenticates this client to Parse
         Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
@@ -174,6 +178,18 @@ public class EventFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        teamsJoined = new HashSet<String>();
+        List<String> teamIDs = ParseUser.getCurrentUser().getList("teamsJoined");
+        if (teamIDs != null) {
+            for (String teamID : teamIDs) {
+                ParseQuery<Team> teamQuery = ParseQuery.getQuery("Team");
+                try {
+                    teamsJoined.add(teamQuery.get(teamID).getName());
+                } catch (ParseException e) {
+                }
+            }
+        }
     }
 
     @Override
@@ -215,7 +231,8 @@ public class EventFragment extends Fragment {
                 public void done(List<Event> events, ParseException e) {
                     if (e == null) {
                         for (Event event : events) {
-                            if (!eventIDHashSet.contains(event.getObjectId()) && event.getMaxPeople() > event.getCurrentPeople()) {
+                            if (!eventIDHashSet.contains(event.getObjectId()) && event.getMaxPeople() > event.getCurrentPeople()
+                                    && (teamsJoined.contains(event.getVisibility()) || event.getVisibility().equals("Public"))) {
                                 eventIDHashSet.add(event.getObjectId());
                                 MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(event.getLatitude(), event.getLongitude()));
                                 long dateMilliseconds = event.getDateMilliseconds() + event.getHour() * MILLISECONDS_PER_HOUR + event.getMinute() * MILLISECONDS_PER_MINUTE;
@@ -244,6 +261,7 @@ public class EventFragment extends Fragment {
             ((TextView) popupView.findViewById(R.id.value_location)).setText(event.getAddressText());
             ((TextView) popupView.findViewById(R.id.value_max_people)).setText(String.valueOf(event.getMaxPeople()));
             ((TextView) popupView.findViewById(R.id.value_current_people)).setText(String.valueOf(event.getCurrentPeople()));
+            ((TextView) popupView.findViewById(R.id.value_visibility)).setText(event.getVisibility());
             ((TextView) popupView.findViewById(R.id.value_notes)).setText(event.getNotes());
             ((Button) popupView.findViewById(R.id.button_join)).setOnClickListener(new JoinListener(marker, event, popupWindow));
 

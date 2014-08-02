@@ -12,7 +12,10 @@ import java.util.List;
  * Created by Qian Chen on 7/27/2014.
  */
 @ParseClassName("Event")
-public class Event extends ParseObject {
+public class Event extends ParseObject implements Comparable<Event> {
+
+    public static final int MILLISECONDS_PER_HOUR = 3600000;
+    public static final int MILLISECONDS_PER_MINUTE = 60000;
 
     public void setSportType(String sportType) {
         put("sportType", sportType);
@@ -113,5 +116,16 @@ public class Event extends ParseObject {
 
     public List<String> getParticipants() {
         return getList("participants");
+    }
+
+    @Override
+    public int compareTo(Event another) {
+        if (getDateMilliseconds() != another.getDateMilliseconds()) {
+            return (int) (getDateMilliseconds() - another.getDateMilliseconds());
+        } else if (getHour() != getHour()) {
+            return getHour() - another.getHour();
+        } else {
+            return getMinute() - another.getMinute();
+        }
     }
 }

@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -82,8 +83,6 @@ public class NewEventActivity extends Activity {
                 calendarView.setDate(date.getTimeInMillis(), false, true);
             }
         }
-
-
         sportTypeSpinner = (NoDefaultSpinner) findViewById(R.id.spinner_sport_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sportTypeAdapter = ArrayAdapter.createFromResource(this, R.array.sport_type_array, android.R.layout.simple_spinner_item);
@@ -96,6 +95,18 @@ public class NewEventActivity extends Activity {
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> visibilityAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
         visibilityAdapter.add("Public");
+        // get user's team list
+        List<String> teams = ParseUser.getCurrentUser().getList("teamsJoined");
+        if (teams != null) {
+            for (String teamID : teams) {
+                ParseQuery<Team> teamQuery = ParseQuery.getQuery("Team");
+                teamQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                try {
+                    visibilityAdapter.add(teamQuery.get(teamID).getName());
+                } catch (ParseException e) {
+                }
+            }
+        }
         // Specify the layout to use when the list of choices appears
         visibilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -239,6 +250,19 @@ public class NewEventActivity extends Activity {
                 try {
                     ParseUser.getCurrentUser().fetch();
                 } catch (ParseException userException) {
+                }
+
+                // update team's event information if the event is visible to some team
+                String teamName = event.getVisibility();
+                ParseQuery<Team> teamQuery = ParseQuery.getQuery("Team");
+                teamQuery.whereEqualTo("name", teamName);
+                try {
+                    Team team = teamQuery.getFirst();
+                    // update cache
+                    teamQuery.get(team.getObjectId());
+                    team.addEvent(event.getObjectId());
+                    team.saveInBackground();
+                } catch (ParseException e1) {
                 }
 
                 Toast.makeText(getApplicationContext(), getString(R.string.event_created_successfully), Toast.LENGTH_SHORT).show();

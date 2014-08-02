@@ -71,4 +71,21 @@ public class Team extends ParseObject {
     public List<String> getMembers() {
         return getList("members");
     }
+
+    public void addEvent(String event) {
+        List<String> events = getList("events");
+        if (events == null) {
+            events = new ArrayList<String>();
+        }
+        events.add(event);
+        put("events", events);
+    }
+
+    public void setEvents(List<String> events) {
+        put("events", events);
+    }
+
+    public List<String> getEvents() {
+        return getList("events");
+    }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,21 +22,31 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class TeamInfoActivity extends Activity {
 
     public static final String CAPTAIN_SUFFIX = " (C)";
     public static final int MANAGE_REQUEST_REQUEST_CODE = 67;
+    public static final int MILLISECONDS_PER_HOUR = 3600000;
+    public static final int MILLISECONDS_PER_MINUTE = 60000;
+
     private Team team;
     private List<ParseUser> members;
     private ParseImageView teamEmblem;
     private TextView teamName;
     private TextView memberName;
     private ParseImageView memberAvatar;
-    private LinearLayout linearLayout;
+    private LinearLayout memberLayout;
+    private LinearLayout eventLayout;
     private List<String> membersIDs;
+    private ListView listView;
+    private List<Event> teamEvents;
+    private TeamEventAdapter teamEventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +62,12 @@ public class TeamInfoActivity extends Activity {
         // get references of all the views
         teamEmblem = (ParseImageView) findViewById(R.id.team_info_emblem);
         teamName = (TextView) findViewById(R.id.team_info_team_name);
-        linearLayout =(LinearLayout)findViewById(R.id.team_info_linear);
+        memberLayout =(LinearLayout)findViewById(R.id.team_info_linear);
+        eventLayout = (LinearLayout) findViewById(R.id.linear_layout_team_event);
 
         ParseQuery<Team> query = ParseQuery.getQuery("Team");
         // try to load from the cache; but if that fails, load results from the network
-        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+//        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
         try {
             team = query.get(getIntent().getStringExtra("teamID"));
         } catch (ParseException e) {
@@ -69,10 +81,45 @@ public class TeamInfoActivity extends Activity {
         teamEmblem.loadInBackground();
         teamName.setText(team.getName());
 
+        // show team members
         showMembers();
+
+        // get team events
+        teamEvents = new ArrayList<Event>();
+        List<String> teamEventIDs = team.getEvents();
+        if (teamEventIDs == null) {
+            teamEventIDs = new ArrayList<String>();
+        } else {
+            for (String teamEventID : teamEventIDs) {
+                ParseQuery<Event> eventQuery = ParseQuery.getQuery("Event");
+                try {
+                    teamEvents.add(eventQuery.get(teamEventID));
+                } catch (ParseException e) {
+                }
+            }
+        }
+
+        // show team events
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd HH:mm");
+        Collections.sort(teamEvents);
+        for (Event teamEvent : teamEvents) {
+            eventLayout.addView(addEventInfo(simpleDateFormat, teamEvent));
+        }
 
         // set "Leave Team" button listener
         ((Button) findViewById(R.id.button_leave)).setOnClickListener(new LeaveListener());
+    }
+
+    private LinearLayout addEventInfo(SimpleDateFormat simpleDateFormat, Event teamEvent) {
+        LayoutInflater inflater;
+        inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_team_event, null);
+
+        ((TextView) layout.findViewById(R.id.event_type)).setText(teamEvent.getSportType());
+        long dateMilliseconds = teamEvent.getDateMilliseconds() + teamEvent.getHour() * MILLISECONDS_PER_HOUR + teamEvent.getMinute() * MILLISECONDS_PER_MINUTE;
+        ((TextView) layout.findViewById(R.id.event_time)).setText(simpleDateFormat.format(new Date(dateMilliseconds)));
+        ((TextView) layout.findViewById(R.id.event_location)).setText(teamEvent.getAddressText().split(",")[0]);
+        return layout;
     }
 
     private void showMembers() {
@@ -93,7 +140,7 @@ public class TeamInfoActivity extends Activity {
 
         // show member avatar and name
         for (int index = 0; index < members.size(); ++index) {
-            linearLayout.addView(addMemberInfo(index));
+            memberLayout.addView(addMemberInfo(index));
         }
     }
 
@@ -175,7 +222,7 @@ public class TeamInfoActivity extends Activity {
             membersIDs = newMembersIDs;
             // show member avatar and name
             for (int index = startIndex; index < newMembersIDs.size(); ++index) {
-                linearLayout.addView(addMemberInfo(index));
+                memberLayout.addView(addMemberInfo(index));
             }
         }
     }
