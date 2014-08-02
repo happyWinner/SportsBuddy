@@ -58,84 +58,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProfileFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/ProfileFragment.java">
+      <file leaf-file-name="EventFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2373" max-vertical-offset="3914">
-              <caret line="166" column="56" selection-start-line="166" selection-start-column="56" selection-end-line="166" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3117" max-vertical-offset="4636">
+              <caret line="222" column="64" selection-start-line="222" selection-start-column="64" selection-end-line="222" selection-end-column="64" />
               <folding>
-                <element signature="e#5556#5606#0" expanded="true" />
-                <element signature="e#5617#5665#0" expanded="true" />
-                <element signature="e#5711#5760#0" expanded="true" />
-                <element signature="e#6537#6569#0" expanded="true" />
-                <element signature="e#6627#6662#0" expanded="true" />
-                <element signature="e#6814#6869#0" expanded="true" />
-                <element signature="e#6983#7023#0" expanded="true" />
+                <element signature="e#3360#3394#0" expanded="true" />
+                <element signature="e#3396#3426#0" expanded="true" />
+                <element signature="e#5218#5264#0" expanded="true" />
+                <element signature="method#onSaveInstanceState#0;class#EventFragment#0" expanded="false" />
+                <element signature="class#CameraListener#0;class#EventFragment#0" expanded="false" />
+                <element signature="class#InfoWindowListener#0;class#EventFragment#0" expanded="false" />
+                <element signature="method#onClick#0;class#JoinListener#0;class#EventFragment#0" expanded="false" />
+                <element signature="e#13118#13164#0" expanded="true" />
+                <element signature="e#14283#14326#0" expanded="true" />
+                <element signature="e#15328#15369#0" expanded="true" />
+                <element signature="e#15567#15610#0" expanded="true" />
+                <element signature="e#15798#15831#0" expanded="true" />
+                <element signature="e#15999#16032#0" expanded="true" />
+                <element signature="docComment;class#OnFragmentInteractionListener#0;class#EventFragment#0" expanded="false" />
+                <element signature="e#17001#17049#0" expanded="true" />
+                <element signature="e#17060#17106#0" expanded="true" />
+                <element signature="e#17144#17191#0" expanded="true" />
+                <element signature="e#17193#18111#0" expanded="true" />
+                <element signature="e#18100#18101#0" expanded="true" />
+                <element signature="e#18148#18196#0" expanded="true" />
+                <element signature="class#TweetTask#0;class#EventFragment#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TwitterOAuthActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TwitterOAuthActivity.java">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="1653">
-              <caret line="50" column="72" selection-start-line="50" selection-start-column="72" selection-end-line="50" selection-end-column="72" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1311" max-vertical-offset="6080">
+              <caret line="120" column="90" selection-start-line="119" selection-start-column="7" selection-end-line="120" selection-end-column="90" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
+      <file leaf-file-name="AddReplyActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/AddReplyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2937" max-vertical-offset="6536">
-              <caret line="171" column="65" selection-start-line="167" selection-start-column="8" selection-end-line="171" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64449066" vertical-offset="2749" max-vertical-offset="3230">
-              <caret line="161" column="64" selection-start-line="161" selection-start-column="64" selection-end-line="161" selection-end-column="64" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2024" max-vertical-offset="2793">
+              <caret line="139" column="90" selection-start-line="138" selection-start-column="8" selection-end-line="139" selection-end-column="90" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DiscoverTeamActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/DiscoverTeamActivity.java">
+      <file leaf-file-name="NewEventActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/NewEventActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2622" max-vertical-offset="3819">
-              <caret line="182" column="9" selection-start-line="158" selection-start-column="12" selection-end-line="182" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="colors.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
-              <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8148148" vertical-offset="0" max-vertical-offset="228">
-              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.45594713" vertical-offset="2453" max-vertical-offset="5149">
+              <caret line="177" column="94" selection-start-line="177" selection-start-column="94" selection-end-line="177" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -863,11 +842,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/DiscussionFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Team.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_event.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamEventAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Event.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/NewEventActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamInfoActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_team_event.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_team_info.xml" />
@@ -886,7 +862,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/ProfileFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TwitterOAuthActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamEventAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/NewEventActivity.java" />
       </list>
     </option>
   </component>
@@ -1440,6 +1419,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33054662" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20862308" sideWeight="0.4993573" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.4993573" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3977747" sideWeight="0.50064266" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1447,7 +1427,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24200279" sideWeight="0.49967846" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29207233" sideWeight="0.49871466" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962447" sideWeight="0.49871466" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1460,7 +1440,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20862308" sideWeight="0.4993573" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1590,14 +1569,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/new_discussion.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="190">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_view_post.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1617,13 +1588,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="1197">
           <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5455" max-vertical-offset="6080">
-          <caret line="369" column="9" selection-start-line="347" selection-start-column="8" selection-end-line="369" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1733,13 +1697,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47756875" vertical-offset="1532" max-vertical-offset="2223">
           <caret line="122" column="35" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/AddReplyActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10998553" vertical-offset="1292" max-vertical-offset="2793">
-          <caret line="93" column="33" selection-start-line="82" selection-start-column="4" selection-end-line="93" selection-end-column="33" />
+          <folding>
+            <element signature="e#1106#1140#0" expanded="true" />
+            <element signature="e#1142#1172#0" expanded="true" />
+            <element signature="e#1888#2074#0" expanded="true" />
+            <element signature="e#2063#2064#0" expanded="true" />
+            <element signature="method#onOptionsItemSelected#0;class#NewDiscussionActivity#0" expanded="false" />
+            <element signature="e#2941#2978#0" expanded="true" />
+            <element signature="e#3246#3285#0" expanded="true" />
+            <element signature="e#3961#4002#0" expanded="true" />
+            <element signature="e#4186#4229#0" expanded="true" />
+            <element signature="e#4403#4436#0" expanded="true" />
+            <element signature="e#4605#4642#0" expanded="true" />
+            <element signature="class#TouchListener#0;class#NewDiscussionActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1747,6 +1718,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44988865" vertical-offset="710" max-vertical-offset="1273">
           <caret line="77" column="12" selection-start-line="77" selection-start-column="12" selection-end-line="77" selection-end-column="12" />
+          <folding>
+            <element signature="e#1865#1866#0" expanded="true" />
+            <element signature="e#1902#1903#0" expanded="true" />
+            <element signature="e#1941#1942#0" expanded="true" />
+            <element signature="e#1981#1982#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1849,13 +1826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamEventAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15367483" vertical-offset="444" max-vertical-offset="1235">
-          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="28" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32293987" vertical-offset="1337" max-vertical-offset="1786">
@@ -1868,22 +1838,6 @@
             <element signature="e#2660#2661#0" expanded="true" />
             <element signature="e#2706#2707#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/NewEventActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3959" max-vertical-offset="4921">
-          <caret line="260" column="35" selection-start-line="260" selection-start-column="35" selection-end-line="260" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="550" max-vertical-offset="3515">
-          <caret line="69" column="62" selection-start-line="69" selection-start-column="62" selection-end-line="69" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2032,19 +1986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2627" max-vertical-offset="4560">
-          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
-          <folding>
-            <element signature="method#onSaveInstanceState#0;class#EventFragment#0" expanded="false" />
-            <element signature="method#onButtonPressed#0;class#EventFragment#0" expanded="false" />
-            <element signature="method#onOptionsItemSelected#0;class#EventFragment#0" expanded="false" />
-            <element signature="class#JoinListener#0;class#EventFragment#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/sdk/platforms/android-18/data/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5340" max-vertical-offset="47861">
@@ -2063,7 +2004,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+        <state vertical-scroll-proportion="0.31600833" vertical-offset="0" max-vertical-offset="481">
           <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
           <folding />
         </state>
@@ -2090,34 +2031,24 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8148148" vertical-offset="0" max-vertical-offset="228">
+        <state vertical-scroll-proportion="0.16740088" vertical-offset="0" max-vertical-offset="454">
           <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/DiscoverTeamActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamInfoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2622" max-vertical-offset="3819">
-          <caret line="182" column="9" selection-start-line="158" selection-start-column="12" selection-end-line="182" selection-end-column="9" />
+        <state vertical-scroll-proportion="-0.07900208" vertical-offset="1425" max-vertical-offset="5016">
+          <caret line="99" column="9" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2937" max-vertical-offset="6536">
-          <caret line="171" column="65" selection-start-line="167" selection-start-column="8" selection-end-line="171" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/ProfileFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2373" max-vertical-offset="3914">
-          <caret line="166" column="56" selection-start-line="166" selection-start-column="56" selection-end-line="166" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1347" max-vertical-offset="3914">
+          <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
           <folding>
             <element signature="e#5556#5606#0" expanded="true" />
             <element signature="e#5617#5665#0" expanded="true" />
@@ -2138,10 +2069,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/TeamEventAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="640" max-vertical-offset="1235">
+          <caret line="58" column="118" selection-start-line="58" selection-start-column="92" selection-end-line="58" selection-end-column="118" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/sdk/sources/android-18/android/app/FragmentManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7493188" vertical-offset="13520" max-vertical-offset="37430">
+          <caret line="848" column="0" selection-start-line="848" selection-start-column="0" selection-end-line="848" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/DiscoverTeamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54405284" vertical-offset="2508" max-vertical-offset="3819">
+          <caret line="171" column="60" selection-start-line="171" selection-start-column="60" selection-end-line="171" selection-end-column="60" />
+          <folding>
+            <element signature="e#6724#6756#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64449066" vertical-offset="2749" max-vertical-offset="3230">
-          <caret line="161" column="64" selection-start-line="161" selection-start-column="64" selection-end-line="161" selection-end-column="64" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2749" max-vertical-offset="3325">
+          <caret line="166" column="37" selection-start-line="166" selection-start-column="18" selection-end-line="166" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31423292" vertical-offset="1274" max-vertical-offset="6536">
+          <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/AddReplyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2024" max-vertical-offset="2793">
+          <caret line="139" column="90" selection-start-line="138" selection-start-column="8" selection-end-line="139" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/EventFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3117" max-vertical-offset="4636">
+          <caret line="222" column="64" selection-start-line="222" selection-start-column="64" selection-end-line="222" selection-end-column="64" />
+          <folding>
+            <element signature="e#3360#3394#0" expanded="true" />
+            <element signature="e#3396#3426#0" expanded="true" />
+            <element signature="e#5218#5264#0" expanded="true" />
+            <element signature="method#onSaveInstanceState#0;class#EventFragment#0" expanded="false" />
+            <element signature="class#CameraListener#0;class#EventFragment#0" expanded="false" />
+            <element signature="class#InfoWindowListener#0;class#EventFragment#0" expanded="false" />
+            <element signature="method#onClick#0;class#JoinListener#0;class#EventFragment#0" expanded="false" />
+            <element signature="e#13118#13164#0" expanded="true" />
+            <element signature="e#14283#14326#0" expanded="true" />
+            <element signature="e#15328#15369#0" expanded="true" />
+            <element signature="e#15567#15610#0" expanded="true" />
+            <element signature="e#15798#15831#0" expanded="true" />
+            <element signature="e#15999#16032#0" expanded="true" />
+            <element signature="docComment;class#OnFragmentInteractionListener#0;class#EventFragment#0" expanded="false" />
+            <element signature="e#17001#17049#0" expanded="true" />
+            <element signature="e#17060#17106#0" expanded="true" />
+            <element signature="e#17144#17191#0" expanded="true" />
+            <element signature="e#17193#18111#0" expanded="true" />
+            <element signature="e#18100#18101#0" expanded="true" />
+            <element signature="e#18148#18196#0" expanded="true" />
+            <element signature="class#TweetTask#0;class#EventFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1311" max-vertical-offset="6080">
+          <caret line="120" column="90" selection-start-line="119" selection-start-column="7" selection-end-line="120" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qianchen/sportsbuddy/NewEventActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45594713" vertical-offset="2453" max-vertical-offset="5149">
+          <caret line="177" column="94" selection-start-line="177" selection-start-column="94" selection-end-line="177" selection-end-column="94" />
           <folding />
         </state>
       </provider>

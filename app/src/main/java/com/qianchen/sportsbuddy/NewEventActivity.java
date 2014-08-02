@@ -1,6 +1,7 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -172,6 +173,10 @@ public class NewEventActivity extends Activity {
     private class ConfirmListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            // hide the soft keyboard
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
             // get sport type
             if (sportTypeSpinner.getSelectedItem() == null) {
                 Toast.makeText(getApplicationContext(), getString(R.string.error_empty_sport_type), Toast.LENGTH_SHORT).show();
@@ -224,15 +229,17 @@ public class NewEventActivity extends Activity {
             event.setVisibility(visibility);
             event.setNotes(notes);
             event.addParticipant(ParseUser.getCurrentUser().getObjectId());
-            event.saveInBackground(new SaveEventCallback(event));
+            event.saveInBackground(new SaveEventCallback(event, getApplicationContext()));
         }
     }
 
     private class SaveEventCallback extends SaveCallback {
         Event event;
+        Context context;
 
-        public SaveEventCallback(Event event) {
+        public SaveEventCallback(Event event, Context context) {
             this.event = event;
+            this.context = context;
         }
 
         @Override
@@ -265,6 +272,9 @@ public class NewEventActivity extends Activity {
                 } catch (ParseException e1) {
                 }
 
+                Intent intent = new Intent();
+                intent.putExtra("eventID", event.getObjectId());
+                setResult(RESULT_OK, intent);
                 Toast.makeText(getApplicationContext(), getString(R.string.event_created_successfully), Toast.LENGTH_SHORT).show();
             } else {
                 switch (e.getCode()) {
@@ -284,6 +294,7 @@ public class NewEventActivity extends Activity {
                         Toast.makeText(getApplicationContext(), getString(R.string.error_general), Toast.LENGTH_LONG).show();
                         break;
                 }
+                setResult(RESULT_CANCELED);
             }
             finish();
         }

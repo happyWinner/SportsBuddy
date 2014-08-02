@@ -160,5 +160,10 @@
 
     <!-- Strings related to Twitter OAuth activity -->
     <string name="successfully_link_twitter">Successfully linked Twitter!</string>
+    
+    <!-- Strings related to share event on Twitter -->
+    <string name="dialog_share_title">Share on Twitter</string>
+    <string name="dialog_share_message">Do you want to share this event on Twitter?</string>
+    <string name="dialog_share_button">Share</string>
 
 </resources>

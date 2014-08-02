@@ -57,7 +57,7 @@ public class TeamEventAdapter extends BaseAdapter {
             ((TextView) view.findViewById(R.id.event_type)).setText(event.getSportType());
             long dateMilliseconds = event.getDateMilliseconds() + event.getHour() * MILLISECONDS_PER_HOUR + event.getMinute() * MILLISECONDS_PER_MINUTE;
             ((TextView) view.findViewById(R.id.event_time)).setText(simpleDateFormat.format(new Date(dateMilliseconds)));
-            ((TextView) view.findViewById(R.id.event_location)).setText(event.getAddressText().split(",")[0]);
+                ((TextView) view.findViewById(R.id.event_location)).setText(event.getAddressText().split(",")[0]);
         }
 
         return view;

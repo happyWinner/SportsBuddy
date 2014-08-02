@@ -1,14 +1,17 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.InflateException;
@@ -45,6 +48,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import twitter4j.TwitterException;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,8 +64,12 @@ public class EventFragment extends Fragment {
 
     public static final int MILLISECONDS_PER_HOUR = 3600000;
     public static final int MILLISECONDS_PER_MINUTE = 60000;
+    public static final String TWEET_PREFIX = "Join me to play ";
+    public static final String TWEET_SUFFIX = " via SportsBuddy";
+    public static final int NEW_EVENT_REQUEST_CODE = 1234;
 
     private static View view;
+    public static HashSet<String> teamsJoined;
 
     private GoogleMap map;
     private LocationManager locationManager;
@@ -68,7 +77,6 @@ public class EventFragment extends Fragment {
     private CameraPosition lastPosition;
     private HashMap<Marker, Event> markerEventHashMap;
     private HashSet<String> eventIDHashSet;
-    public static HashSet<String> teamsJoined;
     private SimpleDateFormat simpleDateFormat;
 
     public static EventFragment newInstance(String param1, String param2) {
@@ -172,6 +180,7 @@ public class EventFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -201,9 +210,22 @@ public class EventFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() ==  R.id.event_new) {
-            startActivity(new Intent(getActivity(), NewEventActivity.class));
+            startActivityForResult(new Intent(getActivity(), NewEventActivity.class), NEW_EVENT_REQUEST_CODE);
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_EVENT_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
+            ParseQuery<Event> eventQuery = ParseQuery.getQuery("Event");
+            eventQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+            try {
+                shareOnTwitter(eventQuery.get(data.getStringExtra("eventID")), getActivity());
+            } catch (ParseException e) {
+            }
+        }
     }
 
     class CameraListener implements GoogleMap.OnCameraChangeListener {
@@ -328,6 +350,11 @@ public class EventFragment extends Fragment {
                         popupWindow.dismiss();
 
                         // todo: update event participants
+                        // ask user whether to share the event on Twitter
+                        if (MainActivity.accessToken != null) {
+                            shareOnTwitter(event, getActivity());
+                        }
+
                     } else {
                         switch (e.getCode()) {
                             case ParseException.INTERNAL_SERVER_ERROR:
@@ -365,5 +392,72 @@ public class EventFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void shareOnTwitter(final Event event, final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(context.getString(R.string.dialog_share_message)).setTitle(context.getString(R.string.dialog_share_title));
+
+        builder.setPositiveButton(context.getString(R.string.dialog_share_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, MMM dd");
+                StringBuffer message = new StringBuffer();
+
+                message.append(TWEET_PREFIX);
+                message.append(event.getSportType());
+                message.append(" in ");
+                message.append(event.getAddressText().split(",")[0]);
+                message.append(" at ");
+                long dateMilliseconds = event.getDateMilliseconds() + event.getHour() * MILLISECONDS_PER_HOUR + event.getMinute() * MILLISECONDS_PER_MINUTE;
+                message.append(simpleDateFormat.format(new Date(dateMilliseconds)));
+                message.append(TWEET_SUFFIX);
+
+                // start tweet
+                new TweetTask(context).execute(message.toString());
+            }
+        });
+        builder.setNegativeButton(context.getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        // show the alert dialog
+        builder.create().show();
+    }
+
+    // asynchronous task to tweet message
+    class TweetTask extends AsyncTask<String, Void, Exception> {
+
+        private final String SUCCEED_MESSAGE = "Shared on Twitter!";
+        private final String ERROR_MESSAGE = "Failed to share on Twitter!";
+
+        private Context context;
+
+        public TweetTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected TwitterException doInBackground(String... tweetMessage) {
+            try {
+                MainActivity.twitter.updateStatus(tweetMessage[0]);
+            } catch (TwitterException e) {
+                return e;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Exception e) {
+            super.onPostExecute(e);
+            if (e == null) {
+                Toast.makeText(context, SUCCEED_MESSAGE, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
