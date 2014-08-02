@@ -105,6 +105,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qianchen.sportsbuddy.MainActivity" />
         </activity>
+        <activity
+            android:name=".TwitterOAuthActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.qianchen.sportsbuddy.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="sportsbuddy"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

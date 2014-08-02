@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentActivity;
@@ -28,9 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.conf.ConfigurationBuilder;
+
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener,
         EventFragment.OnFragmentInteractionListener, TeamFragment.OnFragmentInteractionListener,
-        DiscussionFragment.OnFragmentInteractionListener {
+        DiscussionFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
     /**
      * Total number of pages.
@@ -53,6 +60,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     ViewPager mViewPager;
 
     private int lastTabPosition;
+    public static Twitter twitter;
+    public static AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +162,24 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         if (savedInstanceState != null) {
             lastTabPosition = savedInstanceState.getInt("lastTabPosition");
             onTabSelected(actionBar.getTabAt(lastTabPosition), null);
+        }
+
+        // create Twitter4j reference
+        ConfigurationBuilder conf = new ConfigurationBuilder();
+        conf.setDebugEnabled(true)
+                .setOAuthConsumerKey(getString(R.string.consumer_key))
+                .setOAuthConsumerSecret(getString(R.string.consumer_secret));
+        twitter = new TwitterFactory(conf.build()).getInstance();
+
+        // restore access token if already authorized
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String token = sharedPreferences.getString("token", null);
+        String tokenSecret = sharedPreferences.getString("tokenSecret", null);
+        if (token != null && tokenSecret != null) {
+            accessToken = new AccessToken(token, tokenSecret);
+            twitter.setOAuthAccessToken(accessToken);
+        } else {
+            accessToken = null;
         }
     }
 
@@ -294,6 +321,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     break;
 
                 case 4:
+                    fragment = new ProfileFragment();
+                    break;
+
                 default:
                     fragment = new PlaceholderFragment();
             }

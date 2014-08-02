@@ -54,4 +54,10 @@
     <!-- Strings related to new discussion activity -->
     <dimen name="post_content_padding_top">30dp</dimen>
 
+    <!-- Dimens related to profile fragment -->
+    <dimen name="text_list_margin">35dp</dimen>
+    <dimen name="list_list_margin">20dp</dimen>
+    <dimen name="button_margin">20dp</dimen>
+    <dimen name="avatar_name_margin">20dp</dimen>
+
 </resources>
