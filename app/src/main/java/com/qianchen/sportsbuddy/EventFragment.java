@@ -396,6 +396,10 @@ public class EventFragment extends Fragment {
 
 
     public void shareOnTwitter(final Event event, final Context context) {
+        if (MainActivity.accessToken == null) {
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setMessage(context.getString(R.string.dialog_share_message)).setTitle(context.getString(R.string.dialog_share_title));

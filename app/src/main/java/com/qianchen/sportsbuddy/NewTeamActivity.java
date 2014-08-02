@@ -1,12 +1,18 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +38,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +56,8 @@ public class NewTeamActivity extends Activity {
     private EditText editTeamDescription;
     private ImageView emblemImageView;
     private ParseFile emblem;
+    private Uri outputFileUri;
+    private Uri croppedFileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +113,7 @@ public class NewTeamActivity extends Activity {
         ((TableLayout) findViewById(R.id.table_layout)).setOnTouchListener(new TouchListener());
 
         // set "Upload Emblem" button listener
-        buttonUploadEmblem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent choosePictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(choosePictureIntent, UPLOAD_EMBLEM_REQUEST_CODE);
-            }
-        });
+        buttonUploadEmblem.setOnClickListener(new UploadListener());
 
         // set "Cancel" button listener
         ((Button) findViewById(R.id.button_cancel_team)).setOnClickListener(new View.OnClickListener() {
@@ -123,11 +127,50 @@ public class NewTeamActivity extends Activity {
         ((Button) findViewById(R.id.button_create_team)).setOnClickListener(new CreateListener());
     }
 
-    private class TouchListener implements View.OnTouchListener {
+    class TouchListener implements View.OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             // hide the soft keyboard when the background is touched
             hideSoftInput();
             return true;
+        }
+    }
+
+    class UploadListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // Determine Uri of camera image to save.
+            final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+            root.mkdirs();
+            final File sdImageMainDirectory = new File(root, "img_"+ System.currentTimeMillis() + ".jpg");
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+
+            // Camera.
+            final List<Intent> cameraIntents = new ArrayList<Intent>();
+            final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            final PackageManager packageManager = getPackageManager();
+            final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+            for(ResolveInfo res : listCam) {
+                final String packageName = res.activityInfo.packageName;
+                final Intent intent = new Intent(captureIntent);
+                intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                intent.setPackage(packageName);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                cameraIntents.add(intent);
+            }
+
+            // Filesystem.
+            final Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setType("image/*");
+            galleryIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            galleryIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+            // Chooser of filesystem options.
+            final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
+
+            // Add the camera options.
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
+
+            startActivityForResult(chooserIntent, UPLOAD_EMBLEM_REQUEST_CODE);
         }
     }
 
@@ -149,32 +192,65 @@ public class NewTeamActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UPLOAD_EMBLEM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            // ask user to crop the image
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(data.getData(), "image/*");
-            intent.putExtra("crop", "true");
-            // aspectX aspectY
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            // outputX outputY
-            intent.putExtra("outputX", EMBLEM_WIDTH);
-            intent.putExtra("outputY", EMBLEM_HEIGHT);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, CROP_EMBLEM_REQUEST_CODE);
-        }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == UPLOAD_EMBLEM_REQUEST_CODE) {
+                final boolean isCamera;
+                if (data == null) {
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
 
-        if (requestCode == CROP_EMBLEM_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap photo = extras.getParcelable("data");
-                Drawable drawable = new BitmapDrawable(this.getResources(),photo);
-                emblemImageView.setImageDrawable(drawable);
+                Uri selectedImageUri;
+                if (isCamera) {
+                    selectedImageUri = outputFileUri;
+                } else {
+                    selectedImageUri = data == null ? null : data.getData();
+                }
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                emblem = new ParseFile("emblem.png", byteArray);
+                // ask user to crop the avatar
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                // indicate image type and Uri
+                intent.setDataAndType(selectedImageUri, "image/*");
+                // set crop properties
+                intent.putExtra("crop", "true");
+                // indicate aspect of desired crop
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                // indicate output X and Y
+                intent.putExtra("outputX", EMBLEM_WIDTH);
+                intent.putExtra("outputY", EMBLEM_HEIGHT);
+                // retrieve data on return
+                intent.putExtra("return-data", false);
+
+                final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+                root.mkdirs();
+                final File sdImageMainDirectory = new File(root, "img_" + System.currentTimeMillis() + ".jpg");
+                croppedFileUri = Uri.fromFile(sdImageMainDirectory);
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, croppedFileUri);
+                // start the activity - we handle returning in onActivityResult
+                startActivityForResult(intent, CROP_EMBLEM_REQUEST_CODE);
+            }
+
+            if (requestCode == CROP_EMBLEM_REQUEST_CODE) {
+                Bitmap emblemBitmap = null;
+                try {
+                    emblemBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), croppedFileUri);
+                    Drawable drawable = new BitmapDrawable(getResources(), emblemBitmap);
+                    emblemImageView.setImageDrawable(drawable);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    emblemBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    emblem = new ParseFile("emblem.png", byteArray);
+                } catch (IOException e) {
+                }
             }
         }
     }

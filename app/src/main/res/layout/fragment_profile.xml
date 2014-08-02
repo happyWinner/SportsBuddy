@@ -17,7 +17,7 @@
             android:id="@+id/profile_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile_update"/>
+            android:text="@string/profile_upload"/>
         <Button
             android:id="@+id/profile_twitter"
             android:layout_width="wrap_content"

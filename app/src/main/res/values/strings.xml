@@ -151,12 +151,13 @@
     <string name="profile_interest">Interest</string>
     <string name="profile_upcoming_events">Upcoming Events</string>
     <string name="profile_log_out">Log Out</string>
-    <string name="profile_update">profile_update</string>
+    <string name="profile_upload">profile_update</string>
     <string name="profile_twitter">profile_twitter</string>
     <string name="profile_unlink_twitter_button">Unlink</string>
     <string name="profile_unlink_twitter_title">Unlink Twitter?</string>
     <string name="profile_unlink_twitter_message">Do you want to unlink your Twitter account?</string>
     <string name="profile_unlink_twitter_successfully">Successfully unlinked Twitter!</string>
+    <string name="profile_upload_"></string>
 
     <!-- Strings related to Twitter OAuth activity -->
     <string name="successfully_link_twitter">Successfully linked Twitter!</string>

@@ -49,6 +49,12 @@
                     android:orientation="horizontal">
                 </LinearLayout>
             </HorizontalScrollView>
+            <!--<TextView-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:textStyle="bold"-->
+                <!--android:gravity="top|left"-->
+                <!--android:text="Upcoming Team Events:"/>-->
         </LinearLayout>
 
     </ScrollView>

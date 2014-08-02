@@ -102,6 +102,7 @@ public class RegisterActivity extends Activity {
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
+            //todo upload default avatar
             user.signUpInBackground(new RegisterCallback(usernameView, emailView));
         }
 

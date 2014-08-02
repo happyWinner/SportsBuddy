@@ -3,13 +3,22 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +28,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,12 +53,18 @@ public class ProfileFragment extends Fragment {
 
     public static final String CALLBACK_URL = "oauth://sportsbuddy";
     private static final String ERROR_MESSAGE = "Fail to authenticate!";
+    public static final int UPLOAD_REQUEST_CODE = 124213;
+    public static final int CROP_REQUEST_CODE = 1243124;
+    public static final int AVATAR_WIDTH = 200;
+    public static final int AVATAR_HEIGHT = 200;
 
     private ListView profileInterestListView;
     private ProfileInterestAdapter profileInterestAdapter;
     private List<ProfileInterest> profileInterestList;
     private TextView profileName;
     private ImageView profileAvatar;
+    private Uri outputFileUri;
+    private Uri croppedFileUri;
 
     private OnFragmentInteractionListener mListener;
 
@@ -98,6 +115,9 @@ public class ProfileFragment extends Fragment {
         // set twitter button listener
         ((Button) view.findViewById(R.id.profile_twitter)).setOnClickListener(new TwitterListener());
 
+        // set upload avatar button listener
+        ((Button) view.findViewById(R.id.profile_update)).setOnClickListener(new UploadListener());
+
         return view;
     }
 
@@ -123,6 +143,45 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    class UploadListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // Determine Uri of camera image to save.
+            final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+            root.mkdirs();
+            final File sdImageMainDirectory = new File(root, "img_"+ System.currentTimeMillis() + ".jpg");
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+
+            // Camera.
+            final List<Intent> cameraIntents = new ArrayList<Intent>();
+            final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            final PackageManager packageManager = getActivity().getPackageManager();
+            final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+            for(ResolveInfo res : listCam) {
+                final String packageName = res.activityInfo.packageName;
+                final Intent intent = new Intent(captureIntent);
+                intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                intent.setPackage(packageName);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                cameraIntents.add(intent);
+            }
+
+            // Filesystem.
+            final Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setType("image/*");
+            galleryIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            galleryIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+            // Chooser of filesystem options.
+            final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
+
+            // Add the camera options.
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
+
+            startActivityForResult(chooserIntent, UPLOAD_REQUEST_CODE);
+        }
     }
 
     class TwitterListener implements View.OnClickListener {
@@ -181,6 +240,66 @@ public class ProfileFragment extends Fragment {
 
                 // show the alert dialog
                 builder.create().show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_OK) {
+            if (requestCode == UPLOAD_REQUEST_CODE) {
+                final boolean isCamera;
+                if (data == null) {
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+
+                Uri selectedImageUri;
+                if (isCamera) {
+                    selectedImageUri = outputFileUri;
+                } else {
+                    selectedImageUri = data == null ? null : data.getData();
+                }
+
+                // ask user to crop the avatar
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                // indicate image type and Uri
+                intent.setDataAndType(selectedImageUri, "image/*");
+                // set crop properties
+                intent.putExtra("crop", "true");
+                // indicate aspect of desired crop
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                // indicate output X and Y
+                intent.putExtra("outputX", AVATAR_WIDTH);
+                intent.putExtra("outputY", AVATAR_HEIGHT);
+                // retrieve data on return
+                intent.putExtra("return-data", false);
+
+                final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+                root.mkdirs();
+                final File sdImageMainDirectory = new File(root, "img_"+ System.currentTimeMillis() + ".jpg");
+                croppedFileUri = Uri.fromFile(sdImageMainDirectory);
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, croppedFileUri);
+                // start the activity - we handle returning in onActivityResult
+                startActivityForResult(intent, CROP_REQUEST_CODE);
+            }
+            if (requestCode == CROP_REQUEST_CODE) {
+                Bitmap avatar = null;
+                try {
+                    avatar = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), croppedFileUri);
+                    Drawable drawable = new BitmapDrawable(getResources(), avatar);
+                    profileAvatar.setImageDrawable(drawable);
+                } catch (IOException e) {
+                }
             }
         }
     }
