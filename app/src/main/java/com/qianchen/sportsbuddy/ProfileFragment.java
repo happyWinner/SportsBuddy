@@ -123,6 +123,9 @@ public class ProfileFragment extends Fragment {
         // set upload avatar button listener
         ((Button) view.findViewById(R.id.profile_update)).setOnClickListener(new UploadListener());
 
+        // set log out button listener
+        ((Button) view.findViewById(R.id.profile_log_out)).setOnClickListener(new LogoutListener());
+
         return view;
     }
 
@@ -148,6 +151,39 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    class LogoutListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getActivity().getString(R.string.profile_logout_message)).setTitle(getActivity().getString(R.string.profile_logout_title));
+
+            builder.setPositiveButton(getActivity().getString(R.string.profile_logout_button), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // delete linked Twitter account
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.remove("token");
+                    editor.remove("tokenSecret");
+                    editor.commit();
+                    MainActivity.accessToken = null;
+                    MainActivity.twitter = null;
+
+                    ParseUser.logOut();
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            });
+            builder.setNegativeButton(getActivity().getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                }
+            });
+
+            // show the alert dialog
+            builder.create().show();
+        }
     }
 
     class UploadListener implements View.OnClickListener {

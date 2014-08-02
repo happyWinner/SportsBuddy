@@ -157,7 +157,9 @@
     <string name="profile_unlink_twitter_title">Unlink Twitter?</string>
     <string name="profile_unlink_twitter_message">Do you want to unlink your Twitter account?</string>
     <string name="profile_unlink_twitter_successfully">Successfully unlinked Twitter!</string>
-    <string name="profile_upload_"></string>
+    <string name="profile_logout_title">Confirm Logout</string>
+    <string name="profile_logout_message">Are you sure you want to logout?</string>
+    <string name="profile_logout_button">Yes</string>
 
     <!-- Strings related to Twitter OAuth activity -->
     <string name="successfully_link_twitter">Successfully linked Twitter!</string>

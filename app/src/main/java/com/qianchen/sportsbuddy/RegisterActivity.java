@@ -1,6 +1,8 @@
 package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -14,8 +16,11 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
 
 public class RegisterActivity extends Activity {
 
@@ -102,7 +107,11 @@ public class RegisterActivity extends Activity {
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);
-            //todo upload default avatar
+            // set default avatar
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_user_avartar).compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            user.put("avatar",new ParseFile("avatar.png", byteArray));
             user.signUpInBackground(new RegisterCallback(usernameView, emailView));
         }
 
