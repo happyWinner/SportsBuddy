@@ -36,7 +36,7 @@ public class DiscussionFragment extends Fragment {
     public static final int NEW_DISCUSSION_REQUEST_CODE1 = 412;
     private ListView listView;
     private DiscussionAdapter discussionAdapter;
-    private List<DiscussionPost> discussionPostList;
+    private static List<DiscussionPost> discussionPostList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,27 +62,29 @@ public class DiscussionFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
-        // try to load from the cache; but if that fails, load results from the network
-        postQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        postQuery.addDescendingOrder("createdAt");
-        try {
-            discussionPostList = postQuery.find();
-        } catch (com.parse.ParseException e) {
-            switch (e.getCode()) {
-                case ParseException.INTERNAL_SERVER_ERROR:
-                    Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
-                    break;
+        if (discussionPostList == null) {
+            ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
+            // try to load from the cache; but if that fails, load results from the network
+            postQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+            postQuery.addDescendingOrder("createdAt");
+            try {
+                discussionPostList = postQuery.find();
+            } catch (com.parse.ParseException e) {
+                switch (e.getCode()) {
+                    case ParseException.INTERNAL_SERVER_ERROR:
+                        Toast.makeText(getActivity(), getString(R.string.error_internal_server), Toast.LENGTH_LONG).show();
+                        break;
 
-                case ParseException.CONNECTION_FAILED:
-                    Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
-                    break;
+                    case ParseException.CONNECTION_FAILED:
+                        Toast.makeText(getActivity(), getString(R.string.error_connection_failed), Toast.LENGTH_LONG).show();
+                        break;
 
-                case ParseException.TIMEOUT:
-                    Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
-                    break;
+                    case ParseException.TIMEOUT:
+                        Toast.makeText(getActivity(), getString(R.string.error_timeout), Toast.LENGTH_LONG).show();
+                        break;
+                }
+                return;
             }
-            return;
         }
         discussionAdapter = new DiscussionAdapter(getActivity(), discussionPostList);
     }

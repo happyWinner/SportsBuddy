@@ -28,6 +28,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,6 +111,7 @@ public class ProfileFragment extends Fragment {
         profileInterestListView = (ListView) view.findViewById(R.id.profile_interest);
         profileName = (TextView)view.findViewById(R.id.profile_name);
         profileAvatar = (ImageView)view.findViewById(R.id.profile_avatar);
+        // todo get avatar from parse
         profileAvatar.setImageResource(R.drawable.ic_launcher);
         //TODO: set to parse
         profileName.setText("DHOOUUPUP");
@@ -293,11 +298,18 @@ public class ProfileFragment extends Fragment {
                 startActivityForResult(intent, CROP_REQUEST_CODE);
             }
             if (requestCode == CROP_REQUEST_CODE) {
-                Bitmap avatar = null;
+                Bitmap avatarBitmap = null;
                 try {
-                    avatar = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), croppedFileUri);
-                    Drawable drawable = new BitmapDrawable(getResources(), avatar);
+                    avatarBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), croppedFileUri);
+                    Drawable drawable = new BitmapDrawable(getResources(), avatarBitmap);
                     profileAvatar.setImageDrawable(drawable);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    avatarBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    ParseFile avatar = new ParseFile("avatar.png", byteArray);
+                    ParseUser.getCurrentUser().put("avatar", avatar);
+                    ParseUser.getCurrentUser().saveInBackground();
                 } catch (IOException e) {
                 }
             }
