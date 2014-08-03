@@ -29,8 +29,6 @@ import java.util.List;
 
 public class NewEventMapActivity extends Activity {
 
-    public static final String LOG_TAG = NewEventMapActivity.class.getSimpleName();
-
     private SearchView searchView;
     private LocationManager locationManager;
     private GoogleMap map;

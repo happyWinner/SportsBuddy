@@ -189,7 +189,6 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -233,6 +232,7 @@ public class ProfileFragment extends Fragment {
 
                     ParseUser.logOut();
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
                 }
             });
             builder.setNegativeButton(getActivity().getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {

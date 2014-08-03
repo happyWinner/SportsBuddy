@@ -59,9 +59,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      */
     ViewPager mViewPager;
 
-    private int lastTabPosition;
     public static Twitter twitter;
     public static AccessToken accessToken;
+
+    private int lastTabPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,8 +193,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        // dynamically inflate the options menu
-        // TODO
+
+        // dynamically inflate the options menus
         switch (getActionBar().getSelectedTab().getPosition()) {
             case 0:
                 getMenuInflater().inflate(R.menu.event, menu);

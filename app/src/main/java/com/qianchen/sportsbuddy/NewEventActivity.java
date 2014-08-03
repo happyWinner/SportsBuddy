@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -92,7 +91,6 @@ public class NewEventActivity extends Activity {
         // set the minimum date as today in the calendar view
         calendarView.setMinDate(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Log.e("zzz", dateFormat.format(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS));
         // Workaround for CalendarView bug relating to setMinDate():
         // https://code.google.com/p/android/issues/detail?id=42750
         // Set then reset the date on the calendar so that it properly

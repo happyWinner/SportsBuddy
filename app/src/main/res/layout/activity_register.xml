@@ -27,6 +27,7 @@
         android:id="@+id/register_username"
         android:hint="@string/prompt_username"
         android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -38,6 +39,7 @@
         android:id="@+id/register_email"
         android:hint="@string/prompt_email"
         android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -49,6 +51,7 @@
         android:id="@+id/register_password"
         android:hint="@string/prompt_password"
         android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -60,6 +63,7 @@
         android:id="@+id/register_confirm_password"
         android:hint="@string/prompt_confirm_password"
         android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:layout_gravity="center_horizontal" />
 
     <Button

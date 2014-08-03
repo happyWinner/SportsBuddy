@@ -2,6 +2,7 @@ package com.qianchen.sportsbuddy;
 
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.BroadcastReceiver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -50,6 +51,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    public static BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +118,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         getLoaderManager().initLoader(0, null, this);
     }
 
-
     /**
      * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -138,9 +139,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         boolean cancel = false;
         View focusView = null;
 
-
         // check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -170,11 +170,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     }
     private boolean isEmailValid(String email) {
         return email.matches("[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return true;
     }
 
     @Override
@@ -268,6 +263,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                                             if (user != null) {
                                                 // Hooray! The user is logged in.
                                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                finish();
                                             } else {
                                                 exceptionHandler(e, getString(R.string.error_unverified_email));
                                             }
