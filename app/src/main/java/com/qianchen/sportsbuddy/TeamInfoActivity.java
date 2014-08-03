@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +43,7 @@ public class TeamInfoActivity extends Activity {
     private LinearLayout memberLayout;
     private LinearLayout eventLayout;
     private List<String> membersIDs;
-    private ListView listView;
     private List<Event> teamEvents;
-    private TeamEventAdapter teamEventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

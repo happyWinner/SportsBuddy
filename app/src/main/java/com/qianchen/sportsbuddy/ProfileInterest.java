@@ -3,22 +3,34 @@ package com.qianchen.sportsbuddy;
 /**
  * Created by Qian Chen on 8/2/2014.
  */
-public class ProfileInterest {
+public class ProfileInterest implements Comparable<ProfileInterest> {
 
-    private String kind;
-    private float score;
+    private String type;
+    private float weight;
 
-    //TODO: rewrite get/set method to parse way
-    public void setKind(String kind){
-        this.kind = kind;
+    public ProfileInterest(String type, float weight) {
+        this.type = type;
+        this.weight = weight;
     }
-    public String getKind(){
-        return kind;
+
+    public void setType(String type){
+        this.type = type;
     }
-    public void setScore(float score){
-        this.score = score;
+
+    public String getType(){
+        return type;
     }
+
+    public void setScore(float weight){
+        this.weight = weight;
+    }
+
     public float getScore(){
-        return score;
+        return weight;
+    }
+
+    @Override
+    public int compareTo(ProfileInterest another) {
+        return (int) ((another.weight - weight) * 100);
     }
 }

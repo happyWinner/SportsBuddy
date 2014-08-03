@@ -49,6 +49,10 @@ public class TwitterOAuthActivity extends Activity {
                 editor.commit();
 
                 Toast.makeText(this, getString(R.string.successfully_link_twitter), Toast.LENGTH_LONG).show();
+
+                // change the "Link Twitter" button to "Unlink Twitter"
+                ProfileFragment.twitterButton.setText(getString(R.string.profile_unlink_twitter));
+
                 startActivity(new Intent(this, MainActivity.class));
             }
         } else {

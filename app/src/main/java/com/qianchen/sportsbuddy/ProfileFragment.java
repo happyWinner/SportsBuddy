@@ -23,19 +23,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -66,11 +73,15 @@ public class ProfileFragment extends Fragment {
     private ProfileInterestAdapter profileInterestAdapter;
     private List<ProfileInterest> profileInterestList;
     private TextView profileName;
-    private ImageView profileAvatar;
+    private ParseImageView profileAvatar;
     private Uri outputFileUri;
     private Uri croppedFileUri;
 
     private OnFragmentInteractionListener mListener;
+    public static Button twitterButton;
+    private ListView listView;
+    private List<Event> eventList;
+    private UserEventAdapter userEventAdapter;
 
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
@@ -86,21 +97,57 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: add parse method, I just hardcoded the interest kinds and star scores
-        ProfileInterest test = new ProfileInterest();
-        test.setKind("Soccer");
-        test.setScore(3.1f);
-        ProfileInterest test2 = new ProfileInterest();
-        test2.setKind("Soccer");
-        test2.setScore(4.3f);
+        // register Event as the subclass of ParseObject
+        ParseObject.registerSubclass(Event.class);
+
+        // authenticates this client to Parse
+        Parse.initialize(getActivity(), getString(R.string.application_id), getString(R.string.client_key));
+
+        // show user's interests
+        int maxCount = Integer.MIN_VALUE;
+        HashMap<String, Integer> teamTypeCountMap = new HashMap<String, Integer>();
+        for (Team team : TeamFragment.teamList) {
+            Integer count =teamTypeCountMap.get(team.getSportsType());
+            if (count == null) {
+                teamTypeCountMap.put(team.getSportsType(), 1);
+            } else {
+                teamTypeCountMap.put(team.getSportsType(), count + 1);
+            }
+            if (maxCount < teamTypeCountMap.get(team.getSportsType())) {
+                maxCount = teamTypeCountMap.get(team.getSportsType());
+            }
+        }
+        int totalTeams = TeamFragment.teamList.size();
+        PriorityQueue<ProfileInterest> profileInterestsHeap = new PriorityQueue<ProfileInterest>();
+        for (Map.Entry<String, Integer> entry : teamTypeCountMap.entrySet()) {
+            profileInterestsHeap.add(new ProfileInterest(entry.getKey(), (float) entry.getValue() / maxCount * 5));
+        }
         profileInterestList = new ArrayList<ProfileInterest>();
-        profileInterestList.add(test);
-        profileInterestList.add(test);
-        profileInterestList.add(test);
-        profileInterestList.add(test2);
-        profileInterestList.add(test2);
+        for (ProfileInterest profileInterest : profileInterestsHeap) {
+            profileInterestList.add(profileInterest);
+        }
 
         profileInterestAdapter = new ProfileInterestAdapter(getActivity(), profileInterestList);
+
+        // show user's upcoming events
+        PriorityQueue<Event> eventHeap = new PriorityQueue<Event>();
+        List<String> eventIdList = ParseUser.getCurrentUser().getList("eventsJoined");
+        if (eventIdList != null) {
+            for (String eventId : eventIdList) {
+                ParseQuery<Event> query = ParseQuery.getQuery("Event");
+                // try to load from the cache; but if that fails, load results from the network
+                query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                try {
+                    eventHeap.add(query.get(eventId));
+                } catch (ParseException e) {
+                }
+            }
+        }
+        eventList = new ArrayList<Event>();
+        for (Event event : eventHeap) {
+            eventList.add(event);
+        }
+        userEventAdapter = new UserEventAdapter(getActivity(), eventList);
     }
 
     @Override
@@ -109,22 +156,35 @@ public class ProfileFragment extends Fragment {
         // inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         profileInterestListView = (ListView) view.findViewById(R.id.profile_interest);
-        profileName = (TextView)view.findViewById(R.id.profile_name);
-        profileAvatar = (ImageView)view.findViewById(R.id.profile_avatar);
-        // todo get avatar from parse
-        profileAvatar.setImageResource(R.drawable.ic_launcher);
-        //TODO: set to parse
-        profileName.setText("DHOOUUPUP");
+        profileName = (TextView) view.findViewById(R.id.profile_name);
+        profileAvatar = (ParseImageView) view.findViewById(R.id.profile_avatar);
+        profileAvatar.setParseFile(ParseUser.getCurrentUser().getParseFile("avatar"));
+        profileAvatar.loadInBackground();
+        profileName.setText(ParseUser.getCurrentUser().getUsername());
+
+
         profileInterestListView.setAdapter(profileInterestAdapter);
 
         // set twitter button listener
-        ((Button) view.findViewById(R.id.profile_twitter)).setOnClickListener(new TwitterListener());
+        view.findViewById(R.id.profile_twitter).setOnClickListener(new TwitterListener());
 
         // set upload avatar button listener
-        ((Button) view.findViewById(R.id.profile_update)).setOnClickListener(new UploadListener());
+        view.findViewById(R.id.profile_upload).setOnClickListener(new UploadListener());
 
         // set log out button listener
-        ((Button) view.findViewById(R.id.profile_log_out)).setOnClickListener(new LogoutListener());
+        view.findViewById(R.id.profile_log_out).setOnClickListener(new LogoutListener());
+
+        // dynamically set the text of link/unlink Twitter button
+        twitterButton = (Button) view.findViewById(R.id.profile_twitter);
+        if (MainActivity.accessToken == null) {
+            twitterButton.setText(getString(R.string.profile_link_twitter));
+        } else {
+            twitterButton.setText(getString(R.string.profile_unlink_twitter));
+        }
+
+        // get a reference to the ListView, and attach this adapter to it
+        listView = (ListView) view.findViewById(R.id.profile_upcoming_events);
+        listView.setAdapter(userEventAdapter);
 
         return view;
     }
@@ -271,6 +331,8 @@ public class ProfileFragment extends Fragment {
                                 .setOAuthConsumerSecret(getString(R.string.consumer_secret));
                         MainActivity.twitter = new TwitterFactory(conf.build()).getInstance();
                         Toast.makeText(getActivity(), getString(R.string.profile_unlink_twitter_successfully), Toast.LENGTH_SHORT).show();
+                        // change the "Unlink Twitter" button to "Link Twitter"
+                        twitterButton.setText(getString(R.string.profile_link_twitter));
                     }
                 });
                 builder.setNegativeButton(getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
@@ -346,7 +408,9 @@ public class ProfileFragment extends Fragment {
                     ParseFile avatar = new ParseFile("avatar.png", byteArray);
                     ParseUser.getCurrentUser().put("avatar", avatar);
                     ParseUser.getCurrentUser().saveInBackground();
+                    ParseUser.getCurrentUser().fetch();
                 } catch (IOException e) {
+                } catch (ParseException e) {
                 }
             }
         }

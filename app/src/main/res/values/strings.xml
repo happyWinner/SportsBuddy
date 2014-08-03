@@ -147,11 +147,12 @@
     <string name="successfully_post">Successfully posted!</string>
 
     <!-- Strings related to profile fragment -->
-    <string name="profile_interest">Interest</string>
+    <string name="profile_interest">Interests</string>
     <string name="profile_upcoming_events">Upcoming Events</string>
     <string name="profile_log_out">Log Out</string>
-    <string name="profile_upload">profile_update</string>
-    <string name="profile_twitter">profile_twitter</string>
+    <string name="profile_upload">Upload Avatar</string>
+    <string name="profile_link_twitter">Link Twitter</string>
+    <string name="profile_unlink_twitter">Unlink Twitter</string>
     <string name="profile_unlink_twitter_button">Unlink</string>
     <string name="profile_unlink_twitter_title">Unlink Twitter?</string>
     <string name="profile_unlink_twitter_message">Do you want to unlink your Twitter account?</string>

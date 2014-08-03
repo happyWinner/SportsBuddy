@@ -38,7 +38,7 @@ public class TeamFragment extends Fragment {
     public static final int DISCOVER_TEAM_REQUEST_CODE = 428;
     public static final int TEAM_INFO_REQUEST_CODE = 117;
     private OnFragmentInteractionListener mListener;
-    private List<Team> teamList;
+    public static List<Team> teamList;
     private TeamAdapter teamAdapter;
     private ListView listView;
 

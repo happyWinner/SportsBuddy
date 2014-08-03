@@ -14,39 +14,44 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true">
         <Button
-            android:id="@+id/profile_update"
+            android:id="@+id/profile_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/button_margin"
             android:text="@string/profile_upload"/>
         <Button
             android:id="@+id/profile_twitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile_twitter"
-            android:paddingTop="@dimen/button_margin"/>
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/button_margin"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/profile_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--TODO: com.parse.ImageView -->
-
-        <ImageView
+        <com.parse.ParseImageView
             android:id="@+id/profile_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/profile_avatar_width"
+            android:layout_height="@dimen/profile_avatar_height"
             android:layout_gravity="center"/>
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textSize="@dimen/profile_username_size"
+            android:textStyle="bold"
             android:paddingTop="@dimen/avatar_name_margin"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/profile_interest"
             android:paddingTop="@dimen/text_list_margin"/>
         <ListView
@@ -59,10 +64,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_upcoming_events"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:paddingTop="@dimen/list_list_margin"/>
         <ListView
             android:id="@+id/profile_upcoming_events"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2">
         </ListView>

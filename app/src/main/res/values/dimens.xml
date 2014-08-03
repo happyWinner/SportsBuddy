@@ -32,8 +32,6 @@
     <dimen name="team_info_member_padding_right">50dp</dimen>
     <dimen name="team_info_member_padding_top">10dp</dimen>
     <dimen name="team_info_member_padding_bottom">10dp</dimen>
-    <dimen name="team_info_member_avatar_height">100dp</dimen>
-    <dimen name="team_info_member_avatar_width">100dp</dimen>
 
     <!--Dimens related to team discover activity -->
     <dimen name="team_discover_text_view_padding_vertical">5dp</dimen>
@@ -47,6 +45,7 @@
     <!-- Dimens related to view post activity -->
     <dimen name="post_title_text_size">35sp</dimen>
     <dimen name="post_content_horizontal_padding">20dp</dimen>
+    <dimen name="post_avatar_width">100dp</dimen>
     <dimen name="button_margin_vertical">20dp</dimen>
     <dimen name="reply_avatar_height">50dp</dimen>
     <dimen name="reply_avatar_width">50dp</dimen>
@@ -59,5 +58,8 @@
     <dimen name="list_list_margin">20dp</dimen>
     <dimen name="button_margin">20dp</dimen>
     <dimen name="avatar_name_margin">20dp</dimen>
+    <dimen name="profile_avatar_height">170dp</dimen>
+    <dimen name="profile_avatar_width">170dp</dimen>
+    <dimen name="profile_username_size">30sp</dimen>
 
 </resources>

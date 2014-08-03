@@ -14,6 +14,7 @@ import java.util.List;
  * Created by Qian Chen on 8/2/2014.
  */
 public class ProfileInterestAdapter extends BaseAdapter {
+
     private Context context;
     private List<ProfileInterest> profileInterestList;
 
@@ -40,13 +41,14 @@ public class ProfileInterestAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        ProfileInterest profileInterest = profileInterestList.get(position);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_item_profile_interest, null);
         }
-        ((TextView) view.findViewById(R.id.profile_interest_kind)).setText(profileInterest.getKind());
-        ((RatingBar )view.findViewById(R.id.profile_rating_bar)).setRating(profileInterest.getScore());
+
+        ProfileInterest profileInterest = profileInterestList.get(position);
+        ((TextView) view.findViewById(R.id.profile_interest_kind)).setText(profileInterest.getType());
+        ((RatingBar) view.findViewById(R.id.profile_rating_bar)).setRating(profileInterest.getScore());
         return view;
     }
 }

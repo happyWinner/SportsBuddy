@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -120,12 +121,8 @@ public class Event extends ParseObject implements Comparable<Event> {
 
     @Override
     public int compareTo(Event another) {
-        if (getDateMilliseconds() != another.getDateMilliseconds()) {
-            return (int) (getDateMilliseconds() - another.getDateMilliseconds());
-        } else if (getHour() != getHour()) {
-            return getHour() - another.getHour();
-        } else {
-            return getMinute() - another.getMinute();
-        }
+        Date date = new Date(getDateMilliseconds() + getHour() * MILLISECONDS_PER_HOUR + getMinute() * MILLISECONDS_PER_MINUTE);
+        Date anotherDate = new Date(another.getDateMilliseconds() + another.getHour() * MILLISECONDS_PER_HOUR + another.getMinute() * MILLISECONDS_PER_MINUTE);
+        return date.compareTo(anotherDate);
     }
 }
