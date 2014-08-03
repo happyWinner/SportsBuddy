@@ -73,7 +73,6 @@
     <string name="button_cancel">Cancel</string>
     <string name="error_empty_sport_type">Please select a sport!</string>
     <string name="error_empty_location">Please select location!</string>
-    <string name="error_empty_max_people">Please input max people!</string>
     <string name="error_empty_visibility">Please select visibility!</string>
     <string name="event_created_successfully">Your event is created successfully!</string>
 

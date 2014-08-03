@@ -17,8 +17,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.Parse;
@@ -42,7 +44,8 @@ public class NewEventActivity extends Activity {
     private NoDefaultSpinner visibilitySpinner;
     private CalendarView calendarView;
     private TimePicker timePicker;
-    private EditText editMaxPeople;
+    private TextView textMaxPeople;
+    private ZoomControls controllerMaxPeople;
     private EditText editNotes;
     private LatLng latLng;
     private String addressText;
@@ -64,8 +67,27 @@ public class NewEventActivity extends Activity {
         // get references of views
         calendarView = (CalendarView) findViewById(R.id.calendar_view);
         timePicker = (TimePicker) findViewById(R.id.time_picker);
-        editMaxPeople = (EditText) findViewById(R.id.edit_max_people);
+        textMaxPeople = (TextView) findViewById(R.id.text_max_people);
+        controllerMaxPeople = (ZoomControls) findViewById(R.id.control_max_people);
         editNotes = (EditText) findViewById(R.id.edit_notes);
+
+        // set zoom control listener
+        controllerMaxPeople.setOnZoomInClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textMaxPeople.setText(String.valueOf(Integer.parseInt(textMaxPeople.getText().toString()) + 1));
+            }
+        });
+        controllerMaxPeople.setOnZoomOutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int maxPeople = Integer.parseInt(textMaxPeople.getText().toString()) - 1;
+                if (maxPeople < 1) {
+                    maxPeople = 1;
+                }
+                textMaxPeople.setText(String.valueOf(maxPeople));
+            }
+        });
 
         // set the minimum date as today in the calendar view
         calendarView.setMinDate(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS);
@@ -198,12 +220,7 @@ public class NewEventActivity extends Activity {
             }
 
             // get max people
-            String maxPeople = editMaxPeople.getText().toString();
-            if (maxPeople == null || maxPeople.length() == 0) {
-                editMaxPeople.setError(getString(R.string.error_empty_max_people));
-                editMaxPeople.requestFocus();
-                return;
-            }
+            String maxPeople = textMaxPeople.getText().toString();
 
             // get visibility
             if (visibilitySpinner.getSelectedItem() == null) {
