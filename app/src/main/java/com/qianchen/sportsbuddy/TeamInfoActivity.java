@@ -128,7 +128,11 @@ public class TeamInfoActivity extends Activity {
             // try to load from the cache; but if that fails, load results from the network
             userQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
             try {
-                members.add(userQuery.get(memberID));
+                if (memberID.equals(ParseUser.getCurrentUser().getObjectId())) {
+                    members.add(ParseUser.getCurrentUser());
+                } else {
+                    members.add(userQuery.get(memberID));
+                }
             } catch (ParseException e) {
                 exceptionHandler(e);
                 finish();

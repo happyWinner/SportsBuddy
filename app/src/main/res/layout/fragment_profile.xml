@@ -59,8 +59,7 @@
         <ListView
             android:id="@+id/profile_interest"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
         </ListView>
         <TextView
             android:layout_width="wrap_content"
@@ -72,8 +71,7 @@
         <ListView
             android:id="@+id/profile_upcoming_events"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
     <Button
