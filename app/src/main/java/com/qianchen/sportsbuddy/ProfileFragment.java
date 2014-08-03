@@ -408,9 +408,12 @@ public class ProfileFragment extends Fragment {
                     ParseFile avatar = new ParseFile("avatar.png", byteArray);
                     ParseUser.getCurrentUser().put("avatar", avatar);
                     ParseUser.getCurrentUser().saveInBackground();
-                    ParseUser.getCurrentUser().fetch();
+
+                    // update cache
+//                    ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+//                    userQuery.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ONLY);
+//                    userQuery.get(ParseUser.getCurrentUser().getObjectId());
                 } catch (IOException e) {
-                } catch (ParseException e) {
                 }
             }
         }

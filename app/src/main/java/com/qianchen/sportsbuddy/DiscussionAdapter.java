@@ -71,7 +71,11 @@ public class DiscussionAdapter extends BaseAdapter {
         userQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
         ParseUser user = null;
         try {
-            user = userQuery.get(discussion.getAuthorID());
+            if (discussion.getAuthorID().equals(ParseUser.getCurrentUser().getObjectId())) {
+                user = ParseUser.getCurrentUser();
+            } else {
+                user = userQuery.get(discussion.getAuthorID());
+            }
         } catch (ParseException e) {
             // todo
         }

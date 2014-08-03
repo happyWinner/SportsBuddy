@@ -5,15 +5,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="custom_ratingbar_style" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/custom_ratingbar_progress</item>
-        <item name="android:minHeight">17dip</item>
-        <item name="android:maxHeight">17dip</item>
-        <item name="android:stepSize">0.1</item>
-        <item name="android:isIndicator">true</item>
-    </style>
-
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-    </style>
-
 </resources>
