@@ -111,7 +111,12 @@ public class RegisterActivity extends Activity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_user_avartar).compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            user.put("avatar",new ParseFile("avatar.png", byteArray));
+            ParseFile avatar = new ParseFile("avatar.png", byteArray);
+            try {
+                avatar.save();
+            } catch (ParseException e) {
+            }
+            user.put("avatar", avatar);
             user.signUpInBackground(new RegisterCallback(usernameView, emailView));
         }
 

@@ -249,7 +249,9 @@ public class NewTeamActivity extends Activity {
                     emblemBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] byteArray = stream.toByteArray();
                     emblem = new ParseFile("emblem.png", byteArray);
+                    emblem.save();
                 } catch (IOException e) {
+                } catch (ParseException e) {
                 }
             }
         }
@@ -287,6 +289,10 @@ public class NewTeamActivity extends Activity {
                 BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_team_emblem).compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 emblem = new ParseFile("emblem.png", byteArray);
+                try {
+                    emblem.save();
+                } catch (ParseException e) {
+                }
             }
 
             // get team description
