@@ -59,6 +59,7 @@ import twitter4j.TwitterException;
  * Use the {@link EventFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
+ * Created by Qian Chen on 7/28/2014.
  */
 public class EventFragment extends Fragment {
 
@@ -170,7 +171,6 @@ public class EventFragment extends Fragment {
         outState.putParcelable("lastPosition", lastPosition);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -349,7 +349,6 @@ public class EventFragment extends Fragment {
                         // dismiss the popup window
                         popupWindow.dismiss();
 
-                        // todo: update event participants
                         // ask user whether to share the event on Twitter
                         if (MainActivity.accessToken != null) {
                             shareOnTwitter(event, getActivity());
@@ -390,7 +389,6 @@ public class EventFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A team object.
+ * Team class communicating with Parse.com
  *
  * Created by Qian Chen on 7/28/2014.
  */

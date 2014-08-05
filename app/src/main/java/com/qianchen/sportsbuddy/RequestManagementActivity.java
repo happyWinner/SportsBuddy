@@ -14,6 +14,11 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The activity for team captain to manage applications
+ *
+ * Created by Qian Chen on 7/29/2014.
+ */
 public class RequestManagementActivity extends Activity {
 
     private List<Request> requestList;

@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * {@link UserEventAdapter} exposes a list of teams to a {@link android.widget.ListView}.
+ *
  * Created by Qian Chen on 8/2/2014.
  */
 public class UserEventAdapter extends BaseAdapter {

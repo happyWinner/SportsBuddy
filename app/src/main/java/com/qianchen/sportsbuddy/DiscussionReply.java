@@ -4,6 +4,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 /**
+ * Discussion Reply communicating with Parse.com
+ *
  * Created by Qian Chen on 8/1/2014.
  */
 @ParseClassName("DiscussionReply")

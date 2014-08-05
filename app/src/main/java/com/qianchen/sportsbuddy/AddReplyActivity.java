@@ -20,6 +20,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+/**
+ * The activity to add a reply in discussion board
+ *
+ * Created by Qian Chen on 7/27/2014.
+ */
 public class AddReplyActivity extends Activity {
 
     private EditText editReply;

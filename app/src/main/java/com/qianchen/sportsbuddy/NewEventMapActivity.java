@@ -27,6 +27,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The activity for users to choose a location when creating an event
+ *
+ * Created by Qian Chen on 7/28/2014.
+ */
 public class NewEventMapActivity extends Activity {
 
     private SearchView searchView;

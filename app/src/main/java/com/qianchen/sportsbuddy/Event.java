@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * An event object.
+ * Event communicating with Parse.com
+ * It contains the information of an event created by user.
  *
  * Created by Qian Chen on 7/27/2014.
  */

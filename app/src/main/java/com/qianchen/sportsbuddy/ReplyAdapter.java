@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -17,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
+ * {@link ReplyAdapter} exposes a list of teams to a {@link android.widget.ListView}.
+ *
  * Created by Qian Chen on 8/1/2014.
  */
 public class ReplyAdapter extends BaseAdapter {
@@ -67,11 +68,9 @@ public class ReplyAdapter extends BaseAdapter {
             try {
                 user = userQuery.getFirst();
             } catch (ParseException e) {
-                // todo
             }
             ParseImageView imageView = (ParseImageView) view.findViewById(R.id.reply_avatar);
-            ParseFile test = user.getParseFile("avatar");
-            imageView.setParseFile(test);
+            imageView.setParseFile(user.getParseFile("avatar"));
             imageView.loadInBackground();
         }
 

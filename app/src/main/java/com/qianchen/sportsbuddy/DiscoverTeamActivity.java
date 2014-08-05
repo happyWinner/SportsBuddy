@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The activity to search and join a team
+ *
+ * Created by Qian Chen on 7/31/2014.
+ */
 public class DiscoverTeamActivity extends Activity {
 
     private SearchView searchView;

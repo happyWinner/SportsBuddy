@@ -29,10 +29,10 @@ import java.util.List;
  * Use the {@link DiscussionFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
+ * Created by Qian Chen on 7/30/2014.
  */
 public class DiscussionFragment extends Fragment {
 
-    public static final int REQUEST_CODE = 963;
     public static final int NEW_DISCUSSION_REQUEST_CODE1 = 412;
     private ListView listView;
     private DiscussionAdapter discussionAdapter;
@@ -119,7 +119,6 @@ public class DiscussionFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_DISCUSSION_REQUEST_CODE1 && resultCode == getActivity().RESULT_OK) {
-            //todo update discussion list!
             ParseQuery<DiscussionPost> postQuery = ParseQuery.getQuery("DiscussionPost");
             try {
                 discussionPostList.add(0, postQuery.get(data.getStringExtra("postID")));
@@ -130,7 +129,6 @@ public class DiscussionFragment extends Fragment {
         discussionAdapter.notifyDataSetChanged();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -165,7 +163,6 @@ public class DiscussionFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

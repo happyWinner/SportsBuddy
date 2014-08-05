@@ -4,7 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 /**
- * An approved request object
+ * Approved Request communicating with Parse.com
  *
  * Created by Qian Chen on 7/31/2014.
  */

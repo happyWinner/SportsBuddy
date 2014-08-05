@@ -35,6 +35,11 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
+/**
+ * Main activity holding four tabs/fragments.
+ *
+ * Created by Qian Chen on 7/28/2014.
+ */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener,
         EventFragment.OnFragmentInteractionListener, TeamFragment.OnFragmentInteractionListener,
         DiscussionFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {

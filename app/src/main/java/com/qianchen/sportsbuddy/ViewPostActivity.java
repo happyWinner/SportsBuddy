@@ -22,6 +22,11 @@ import com.parse.ParseUser;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The activity for users to view a post in the discussion board
+ *
+ * Created by Qian Chen on 7/31/2014.
+ */
 public class ViewPostActivity extends Activity {
 
     public static final int ADD_REPLY_REQUEST_CODE = 60;

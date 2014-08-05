@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
+ * {@link DiscussionAdapter} exposes a list of teams to a {@link android.widget.ListView}.
+ *
  * Created by Qian Chen on 7/31/2014.
  */
 public class DiscussionAdapter extends BaseAdapter {
@@ -77,7 +79,6 @@ public class DiscussionAdapter extends BaseAdapter {
                 user = userQuery.get(discussion.getAuthorID());
             }
         } catch (ParseException e) {
-            // todo
         }
         ParseImageView imageView = (ParseImageView) view.findViewById(R.id.discussion_avatar);
         ParseFile test = user.getParseFile("avatar");

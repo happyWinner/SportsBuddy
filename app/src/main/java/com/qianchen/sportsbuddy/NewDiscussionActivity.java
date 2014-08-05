@@ -21,6 +21,11 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
+/**
+ * The activity for users to write a new post on discussion board
+ *
+ * Created by Qian Chen on 7/30/2014.
+ */
 public class NewDiscussionActivity extends Activity {
 
     private EditText editPostTitle;

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Discussion Post communicating with Parse.com
+ *
  * Created by Qian Chen on 7/31/2014.
  */
 @ParseClassName("DiscussionPost")

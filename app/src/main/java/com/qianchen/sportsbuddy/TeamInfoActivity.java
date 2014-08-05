@@ -27,6 +27,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The activity for users to view the information of one team
+ *
+ * Created by Qian Chen on 7/29/2014.
+ */
 public class TeamInfoActivity extends Activity {
 
     public static final String CAPTAIN_SUFFIX = " (C)";
@@ -63,8 +68,6 @@ public class TeamInfoActivity extends Activity {
         eventLayout = (LinearLayout) findViewById(R.id.linear_layout_team_event);
 
         ParseQuery<Team> query = ParseQuery.getQuery("Team");
-        // try to load from the cache; but if that fails, load results from the network
-//        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
         try {
             team = query.get(getIntent().getStringExtra("teamID"));
         } catch (ParseException e) {
@@ -247,7 +250,7 @@ public class TeamInfoActivity extends Activity {
                 // delete team if no members
                 team.deleteInBackground();
             } else {
-                if (team.getLeaderID() == ParseUser.getCurrentUser().getObjectId()) {
+                if (team.getLeaderID().equals(ParseUser.getCurrentUser().getObjectId())) {
                     // appoint a new captain
                     team.setLeaderID(membersIDs.get(0));
                 }

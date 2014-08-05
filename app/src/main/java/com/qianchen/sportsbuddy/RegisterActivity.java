@@ -22,6 +22,11 @@ import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * The activity for users to register their accounts
+ *
+ * Created by Qian Chen on 7/28/2014.
+ */
 public class RegisterActivity extends Activity {
 
     @Override

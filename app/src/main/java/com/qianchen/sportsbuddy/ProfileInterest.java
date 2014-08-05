@@ -1,6 +1,8 @@
 package com.qianchen.sportsbuddy;
 
 /**
+ * The class to maintain user's interests
+ *
  * Created by Qian Chen on 8/2/2014.
  */
 public class ProfileInterest implements Comparable<ProfileInterest> {

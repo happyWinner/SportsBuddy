@@ -39,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
+ * Created by Qian Chen on 8/1/2014.
  */
 public class ProfileFragment extends Fragment {
 
@@ -117,7 +119,6 @@ public class ProfileFragment extends Fragment {
                 maxCount = teamTypeCountMap.get(team.getSportsType());
             }
         }
-        int totalTeams = TeamFragment.teamList.size();
         PriorityQueue<ProfileInterest> profileInterestsHeap = new PriorityQueue<ProfileInterest>();
         for (Map.Entry<String, Integer> entry : teamTypeCountMap.entrySet()) {
             profileInterestsHeap.add(new ProfileInterest(entry.getKey(), (float) entry.getValue() / maxCount * 5));
@@ -130,7 +131,7 @@ public class ProfileFragment extends Fragment {
         profileInterestAdapter = new ProfileInterestAdapter(getActivity(), profileInterestList);
 
         // show user's upcoming events
-        PriorityQueue<Event> eventHeap = new PriorityQueue<Event>();
+        eventList = new ArrayList<Event>();
         List<String> eventIdList = ParseUser.getCurrentUser().getList("eventsJoined");
         if (eventIdList != null) {
             for (String eventId : eventIdList) {
@@ -138,15 +139,12 @@ public class ProfileFragment extends Fragment {
                 // try to load from the cache; but if that fails, load results from the network
                 query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
                 try {
-                    eventHeap.add(query.get(eventId));
+                    eventList.add(query.get(eventId));
                 } catch (ParseException e) {
                 }
             }
         }
-        eventList = new ArrayList<Event>();
-        for (Event event : eventHeap) {
-            eventList.add(event);
-        }
+        Collections.sort(eventList);
         userEventAdapter = new UserEventAdapter(getActivity(), eventList);
     }
 
@@ -408,11 +406,6 @@ public class ProfileFragment extends Fragment {
                     ParseFile avatar = new ParseFile("avatar.png", byteArray);
                     ParseUser.getCurrentUser().put("avatar", avatar);
                     ParseUser.getCurrentUser().saveInBackground();
-
-                    // update cache
-//                    ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-//                    userQuery.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ONLY);
-//                    userQuery.get(ParseUser.getCurrentUser().getObjectId());
                 } catch (IOException e) {
                 }
             }
@@ -430,7 +423,6 @@ public class ProfileFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

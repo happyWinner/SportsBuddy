@@ -3,7 +3,6 @@ package com.qianchen.sportsbuddy;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,15 +28,21 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
+/**
+ * The activity for users to create a new event
+ *
+ * Created by Qian Chen on 7/28/2014.
+ */
 public class NewEventActivity extends Activity {
 
     public static final int REQUEST_CODE = 75;
-    public static final int OFFSET_MILLIS = 1000;
+    public static final int MILLISECONDS_PER_HOUR = 3600000;
+    public static final int MILLISECONDS_PER_MINUTE = 60000;
 
     private NoDefaultSpinner sportTypeSpinner;
     private NoDefaultSpinner visibilitySpinner;
@@ -88,22 +93,6 @@ public class NewEventActivity extends Activity {
             }
         });
 
-        // set the minimum date as today in the calendar view
-        calendarView.setMinDate(Calendar.getInstance().getTime().getTime() - OFFSET_MILLIS);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // Workaround for CalendarView bug relating to setMinDate():
-        // https://code.google.com/p/android/issues/detail?id=42750
-        // Set then reset the date on the calendar so that it properly
-        // shows today's date. The choice of 24 months is arbitrary.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if (calendarView != null) {
-                Calendar date = Calendar.getInstance();
-                date.add(Calendar.MONTH, 24);
-                calendarView.setDate(date.getTimeInMillis(), false, true);
-                date.add(Calendar.MONTH, -24);
-                calendarView.setDate(date.getTimeInMillis(), false, true);
-            }
-        }
         sportTypeSpinner = (NoDefaultSpinner) findViewById(R.id.spinner_sport_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sportTypeAdapter = ArrayAdapter.createFromResource(this, R.array.sport_type_array, android.R.layout.simple_spinner_item);
@@ -210,6 +199,12 @@ public class NewEventActivity extends Activity {
             // get time
             int hour = timePicker.getCurrentHour();
             int minute = timePicker.getCurrentMinute();
+
+            // check whether it is a future time
+            if (Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis() > dateMilliseconds + hour * MILLISECONDS_PER_HOUR + minute * MILLISECONDS_PER_MINUTE) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_invalid_date), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // get location
             if (latLng == null) {

@@ -15,6 +15,11 @@ import android.widget.Toast;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
 
+/**
+ * The activity for users to authorize their Twitter account
+ *
+ * Created by Qian Chen on 8/2/2014.
+ */
 public class TwitterOAuthActivity extends Activity {
 
     @Override

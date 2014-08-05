@@ -43,6 +43,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The activity for users to create a new team
+ *
+ * Created by Qian Chen on 7/29/2014.
+ */
 public class NewTeamActivity extends Activity {
 
     public static final int UPLOAD_EMBLEM_REQUEST_CODE = 4;
